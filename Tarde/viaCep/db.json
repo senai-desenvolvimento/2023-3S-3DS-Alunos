@@ -1,0 +1,12 @@
+{
+    "cep" : [
+        {
+            "id" : "07181230",
+            "logradouro" : "Rua lá de casa",
+            "bairro" : "Bairro",
+            "localidade" : "Cidade do cara",
+            "estado" : "São Paulo",
+            "uf" : "SP"
+        }
+    ]
+}

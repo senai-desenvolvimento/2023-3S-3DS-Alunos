@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.2.3",
+    "axios": "^1.6.7",
     "expo": "~50.0.4",
+    "expo-cli": "^6.3.10",
     "expo-font": "~11.10.2",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",

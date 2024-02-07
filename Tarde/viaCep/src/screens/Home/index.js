@@ -1,20 +1,52 @@
 // http://192.168.19.142:3000/cep
 // http://192.168.21.105:3000/cep
 
+import reactNativeAxios from "react-native-axios";
 import { BoxInput } from "../../components/BoxInput";
 import { ContainerForm, ContainerInput, ScrollForm } from "./style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Home() {
   // states - variáveis
-  const [cep, setCep] = useState("07181230");
+  const [cep, setCep] = useState("");
   const [logradouro, setLogradouro] = useState("");
   const [bairro, setBairro] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
   const [uf, setUf] = useState("");
 
-  // useEffect - funções
+
+  // useEffect - funções 
+  
+  useEffect(() => {
+    async function buscarCep() {
+      try {
+        if (cep != '' && cep.length === 8) {
+          const endereco = await reactNativeAxios.get(
+            `https://brasilaberto.com/api/v1/zipcode/${cep}`
+          )
+          
+          if(endereco.error)
+          {
+            return;
+          }
+
+          setLogradouro(endereco.data.result.street);
+          setBairro(endereco.data.result.district);
+          setCidade(endereco.data.result.city)
+          setEstado(endereco.data.result.state)
+          setUf(endereco.data.result.stateShortname)
+        }
+      } catch (error) {
+        console.log('Erro ao buscar o CEP');
+      }
+      
+    }
+
+    buscarCep();
+
+  }, [cep]);
+
   return (
     <ScrollForm>
       <ContainerForm>
@@ -29,7 +61,7 @@ export function Home() {
         />
         <BoxInput
           textLabel="Logradouro"
-          placeholder="Logradouro..."
+          placeholder='Logradouro...'
           fieldValue={logradouro}
         />
 
@@ -56,7 +88,7 @@ export function Home() {
             fieldValue={uf}
             textLabel="UF"
             placeholder="UF..."
-            fieldWidth={20}
+            fieldWidth={30}
           />
         </ContainerInput>
       </ContainerForm>

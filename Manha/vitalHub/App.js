@@ -11,14 +11,21 @@ import {
   useFonts,
   MontserratAlternates_600SemiBold,
   MontserratAlternates_500Medium,
-  MontserratAlternates_700Bold
+  MontserratAlternates_700Bold,
 } from "@expo-google-fonts/montserrat-alternates";
+
+import { Quicksand_500Medium } from "@expo-google-fonts/quicksand";
+
+import { Home } from "./src/screens/Home/Home";
+import { StatusBar } from "react-native";
+
 
 export default function App() {
   const [fontsLoaded, fontsError] = useFonts({
     MontserratAlternates_600SemiBold,
     MontserratAlternates_500Medium,
-    MontserratAlternates_700Bold
+    MontserratAlternates_700Bold,
+    Quicksand_500Medium,
   });
 
   if (!fontsLoaded && !fontsError) {
@@ -28,6 +35,7 @@ export default function App() {
   return (
     // envolve a estrutura da navegação
     <NavigationContainer>
+
       {/* componente para navegação */}
       <Stack.Navigator>
         {/* tela */}
@@ -47,6 +55,15 @@ export default function App() {
           component={Login}
           //título da tela
           options={{ title: "Login" }}
+        />
+
+        <Stack.Screen
+          // nome da tela
+          name="Home"
+          //componente que será chamado
+          component={Home}
+          //título da tela
+          options={{ title: "Home" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

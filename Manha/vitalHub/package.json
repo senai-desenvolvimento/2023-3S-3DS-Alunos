@@ -16,10 +16,13 @@
     "@react-navigation/native-stack": "^6.9.17",
     "expo": "~50.0.5",
     "expo-font": "~11.10.2",
+    "expo-linear-gradient": "~12.7.1",
     "expo-status-bar": "~1.11.1",
+    "moment": "^2.30.1",
     "react": "18.2.0",
     "react-native": "0.73.2",
     "react-native-axios": "^0.17.1",
+    "react-native-calendar-strip": "^2.2.6",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {

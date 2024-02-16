@@ -3,22 +3,30 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Navegacao } from "./src/screens/Navegacao/Navegacao";
 import { Login } from "./src/screens/Login/Login";
 
-import { useFonts,MontserratAlternates_600SemiBold,MontserratAlternates_500Medium, MontserratAlternates_700Bold } from "@expo-google-fonts/montserrat-alternates";
+import { Quicksand_500Medium } from "@expo-google-fonts/quicksand";
+import {
+  useFonts,
+  MontserratAlternates_600SemiBold,
+  MontserratAlternates_500Medium,
+  MontserratAlternates_700Bold,
+} from "@expo-google-fonts/montserrat-alternates";
+
+
+import { Home } from "./src/screens/Home/Home";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
-  const[fontsLoaded, fontsError] = useFonts({
+  const [fontsLoaded, fontsError] = useFonts({
     MontserratAlternates_600SemiBold,
     MontserratAlternates_500Medium,
-    MontserratAlternates_700Bold
-  })
+    MontserratAlternates_700Bold,
+    Quicksand_500Medium
+  });
 
-  if(!fontsLoaded && !fontsError){
+  if (!fontsLoaded && !fontsError) {
     return null;
   }
-
 
   return (
     //Container - envolve toda a estrutura de navegação
@@ -42,6 +50,11 @@ export default function App() {
           options={{ title: "Login" }}
         />
 
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ title: "Home" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -3,12 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Navegacao } from "./src/screens/Navegacao/Navegacao";
 import { Login } from "./src/screens/Login/Login";
 
-import { Quicksand_500Medium } from "@expo-google-fonts/quicksand";
+import { Quicksand_500Medium, Quicksand_600SemiBold, Quicksand_400Regular } from "@expo-google-fonts/quicksand";
 import {
   useFonts,
   MontserratAlternates_600SemiBold,
   MontserratAlternates_500Medium,
-  MontserratAlternates_700Bold,
+  MontserratAlternates_700Bold
 } from "@expo-google-fonts/montserrat-alternates";
 
 
@@ -21,7 +21,9 @@ export default function App() {
     MontserratAlternates_600SemiBold,
     MontserratAlternates_500Medium,
     MontserratAlternates_700Bold,
-    Quicksand_500Medium
+    Quicksand_500Medium,
+    Quicksand_600SemiBold,
+    Quicksand_400Regular
   });
 
   if (!fontsLoaded && !fontsError) {

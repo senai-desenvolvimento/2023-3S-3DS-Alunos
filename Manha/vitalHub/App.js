@@ -14,7 +14,7 @@ import {
   MontserratAlternates_700Bold,
 } from "@expo-google-fonts/montserrat-alternates";
 
-import { Quicksand_500Medium } from "@expo-google-fonts/quicksand";
+import { Quicksand_500Medium, Quicksand_400Regular,Quicksand_600SemiBold } from "@expo-google-fonts/quicksand";
 
 import { Home } from "./src/screens/Home/Home";
 import { StatusBar } from "react-native";
@@ -26,6 +26,8 @@ export default function App() {
     MontserratAlternates_500Medium,
     MontserratAlternates_700Bold,
     Quicksand_500Medium,
+    Quicksand_400Regular,
+    Quicksand_600SemiBold
   });
 
   if (!fontsLoaded && !fontsError) {

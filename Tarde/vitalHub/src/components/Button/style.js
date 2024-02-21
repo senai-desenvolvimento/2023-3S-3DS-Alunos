@@ -19,3 +19,12 @@ export const ButtonGoogle = styled(Button)`
     flex-direction:row ;
     gap:27px ;
 `
+
+export const ButtonModal = styled(Button)`
+  width:80% ;
+`
+export const ButtonSecondary = styled(Button)`
+  background-color: transparent ;
+  border:none ;
+  margin-bottom:30px ;
+`

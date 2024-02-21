@@ -20,3 +20,24 @@ export const ButtonGoogle = styled(Button)`
     flex-direction: row ;
     gap: 10px;
 `
+export const ButtonSecondary = styled(Button)`
+    background-color: transparent;
+    border: none;
+`
+
+
+export const ButtonTitle = styled.Text`
+  text-align: center;
+  font-size: 14px;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-family: "MontserratAlternates_700Bold";
+`;
+
+export const ButtonSecondaryTitle = styled(ButtonTitle)`
+text-transform: capitalize;
+text-decoration: underline;
+color: #344f8f;
+`
+
+

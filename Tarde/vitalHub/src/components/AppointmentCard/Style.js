@@ -1,16 +1,16 @@
 import styled from "styled-components";
-import { Title } from '../Title/Style'
+import { Title } from "../Title/Style";
 
 export const ContainerCardsList = styled.View`
     width: 90% ;
-    margin: 0px auto ;
-    margin-bottom: 12px ;
+    margin-bottom:12px ;
     padding: 10px 10px;
     border-radius: 5px ;
     flex-direction: row ;
-    gap: 10px ;
     background-color:#fff ;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08) ;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
+    gap: 10px ;
+    margin: 0 auto ;
 `
 export const ProfileImage = styled.Image`
     width: 77px ;
@@ -20,13 +20,11 @@ export const ProfileImage = styled.Image`
 
 export const ContentCard = styled.View`
     width: 70% ;
-    gap: 11px;
 `
-
 export const DataProfileCard = styled.View`
-    gap: 6px ;
+    gap:6px ;
 `
-export const ProfileName = styled(Title)`
+export const ProfileName = styled(Title)`   
     font-size: 16px ;
 `
 export const ProfileData = styled.View`
@@ -34,33 +32,33 @@ export const ProfileData = styled.View`
     gap: 15px ;
 `
 export const TextAge = styled.Text`
-    font-size: 14px;
+    font-size: 14px ;
+    color: #8C8A97;
     font-family: "Quicksand_400Regular";
 `
-export const TextBold = styled.Text`
+export const TextBold = styled(TextAge)`
     font-family: "Quicksand_600SemiBold";
-    font-size:14px ;
-    color: ${ (props) => props.situacao == 'pendente' ? '#49B3BA' : '#8C8A97'};
 `
 export const ViewRow = styled.View`
     width: 100%;
     flex-direction: row ;
-    align-items:center ;
+    align-items: center ;
     justify-content: space-between ;
+    margin-top: 11px ;
 `
+
 export const ClockCard = styled.View`
-    flex-direction: row ;
+    flex-direction: row;
+    padding: 4px 23px;
     gap: 6px ;
-    padding: 4px 23px ;
     border-radius: 5px ;
-    align-items:center ;
     background-color: ${(props) => props.situacao == "pendente" ? "#E8FCFD" : "#F1F0F5"} ;
 `
 export const ButtonCard = styled.TouchableOpacity`
 
 `
 export const ButtonText = styled.Text`
-    font-size: 12px;
-    font-family: "MontserratAlternates_500Medium";
-    color : ${ (props) => props.situacao == 'pendente' ? '#C81D25' : '#344F8F' }
+    color: ${(props) => props.situacao == "pendente" ? "#c81d25" : "#344f8f"} ;
 `
+
+

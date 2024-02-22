@@ -1,10 +1,9 @@
 import { Modal } from "react-native";
 import { Title } from "../Title/Style";
-import { ModalContent, ModalText, PatientModal } from "./Style";
-import { ButtonSecundaryTitle, ButtonTitle } from "../ButtonTitle/Style";
-import { ButtonModal, ButtonSecondary } from "../Button/style";
+import { ButtonModal, ButtonSecondary, ButtonSecondaryTitle, ButtonTitle } from "../Button/Style";
+import { ModalContent, ModalText, PatientModal } from "./style";
 
-export const CancelattionModal = ({ visible, setShowModalCancel, ...rest }) => {
+export const CancellationModal = ({ visible, setShowModalCancel, ...rest }) => {
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType="fade">
       <PatientModal>
@@ -21,7 +20,7 @@ export const CancelattionModal = ({ visible, setShowModalCancel, ...rest }) => {
           </ButtonModal>
 
           <ButtonSecondary onPress={() => setShowModalCancel(false)}>
-            <ButtonSecundaryTitle>Cancelar</ButtonSecundaryTitle>
+            <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
           </ButtonSecondary>
         </ModalContent>
       </PatientModal>

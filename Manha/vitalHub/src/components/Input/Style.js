@@ -14,3 +14,13 @@ export const Input = styled.TextInput.attrs({
     font-size:16px ;
     font-family: 'MontserratAlternates_600SemiBold';
 `
+
+export const InputCode = styled(Input)`
+  width: 65px;
+  height: 62px;
+
+  text-align: center;
+  border-color: #49B3BA;
+  font-size: 40px;
+  margin-top: 20px;
+`;

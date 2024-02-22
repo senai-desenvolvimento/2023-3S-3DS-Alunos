@@ -1,23 +1,21 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { ContainerHeader } from "../Container/Style"
-import { BoxUser, DataUser, ImageUser, NameUser, TextDefault } from "./Style"
+import { ContainerHeader } from "../Container/Style";
+import { BoxUser, DataUser, ImageUser, NameUser, TextDefault } from "./Style";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export const Header = () => {
-    return(
-        <ContainerHeader>
-            <BoxUser>
-                <ImageUser
-                    source={{uri: "https://github.com/kauameloo.png"}}
-                />
-                <DataUser>
-                    <TextDefault>Bem Vindo !</TextDefault>
-                    <NameUser>Dr.Kauã</NameUser>
-                </DataUser>
-            </BoxUser>
+  return (
+    <ContainerHeader>
+        <BoxUser>
+          <ImageUser source={{ uri: "https://github.com/enzoquarelo.png" }} />
+          <DataUser>
+            <TextDefault>Bem vindo !</TextDefault>
+            <NameUser>Dr.Enzo</NameUser>
+          </DataUser>
+        </BoxUser>
 
-            <MaterialIcons name="notifications" size={25} color="#fbfbfb" />
-
-        </ContainerHeader>
-
-    )
-}
+        {/* material icons */}
+        <MaterialIcons name="notifications" size={25} color="#fbfbfb" />
+    
+    </ContainerHeader>
+  );
+};

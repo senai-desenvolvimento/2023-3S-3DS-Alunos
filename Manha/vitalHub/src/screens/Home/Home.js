@@ -7,7 +7,8 @@ import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListA
 import { useState } from "react";
 import { ListComponent } from "../../components/List/List";
 import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
-import CancellationModal from "../../components/CancellationModal/CancellationModal";
+import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
+import { AppointmentModal } from "../../components/AppointmentModal/AppointmentModal";
 
 const Consultas = [
   { id: 1, nome: "Carlos", situacao: "pendente" },
@@ -18,11 +19,12 @@ const Consultas = [
 ];
 
 export const Home = () => {
-
   const [statusLista, setStatusLista] = useState("pendente");
+
   // Satate para os modais
   const [showModalCancel, setShowModalCancel] = useState(false);
-  const [showModalAppointment, setShowAppointment] = useState(false);
+  const [showModalAppointment, setShowModalAppointment] = useState(false);
+
   return (
     <Container>
       <StatusBar />
@@ -61,25 +63,29 @@ export const Home = () => {
 
       {/* Cards */}
       {/* Lista (FlatList) */}
-        <ListComponent
-            data={Consultas}
-            keyExtractor={(item) => item.id}
+      <ListComponent
+        data={Consultas}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) =>
+          statusLista == item.situacao && (
+            <AppointmentCard
+              situacao={item.situacao}
+              onPressCancel={() => setShowModalCancel(true)}
+              onPressAppointment={() => setShowModalAppointment(true)}
+            />
+          )
+        }
+      />
 
-            renderItem={({item}) => 
-                statusLista == item.situacao && (
-                    <AppointmentCard
-                        situacao={item.situacao}
-                        onPressCancel={() => setShowModalCancel(true)}
-                        onPressAppointment={() => setShowAppointment(true)}
-                    /> 
-                )
-            }
-        />
+      <CancellationModal
+        visible={showModalCancel}
+        setShowModalCancel={setShowModalCancel}
+      />
 
-        <CancellationModal 
-          visible={showModalCancel}
-          setShowModalCancel={setShowModalCancel}
-        />
+      <AppointmentModal
+        visible={showModalAppointment}
+        setShowModalAppointment={setShowModalAppointment}
+      />
     </Container>
   );
 };

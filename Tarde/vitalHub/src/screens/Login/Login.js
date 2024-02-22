@@ -1,14 +1,13 @@
-import { Button, ButtonGoogle } from "../../components/Button/style";
+import { Button, ButtonGoogle } from "../../components/Button/Style";
 import {
   ButtonTitle,
   ButtonTitleGoogle,
 } from "../../components/ButtonTitle/Style";
 import { Container } from "../../components/Container/Style";
 import { Input } from "../../components/Input/Style";
-import { LinkBold, LinkMedium } from "../../components/Link/Style";
+import { LinkBold, LinkMedium } from "../../components/Links/Style";
 import { Logo } from "../../components/Logo/Style";
 import { Title } from "../../components/Title/Style";
-
 import { AntDesign } from "@expo/vector-icons";
 import { ContentAccount, TextAccount } from "./Style";
 
@@ -21,7 +20,7 @@ export const Login = () => {
 
       <Input placeholder="Usuário ou E-mail" />
 
-      <Input placeholder="Senha" />
+      <Input placeholder="Senha" secureTextEntry />
 
       <LinkMedium>Esqueceu sua senha?</LinkMedium>
 

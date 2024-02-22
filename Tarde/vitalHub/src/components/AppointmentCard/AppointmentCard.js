@@ -22,14 +22,16 @@ export const AppointmentCard = ({
   return (
     // container principal
     <ContainerCardsList>
-      <ProfileImage source={{ uri: "https://github.com/Gustavoozz.png" }} />
+      {/* imagem de perfil */}
+      <ProfileImage source={{ uri: "https://github.com/ojuaum1.png" }} />
 
+      {/* conteúdo ao lado da imagem de perfil */}
       <ContentCard>
         <DataProfileCard>
-          <ProfileName>Gustavo Magalhães</ProfileName>
+          <ProfileName>João</ProfileName>
 
           <ProfileData>
-            <TextAge>19 anos</TextAge>
+            <TextAge>45 anos</TextAge>
             <TextBold>Rotina</TextBold>
           </ProfileData>
         </DataProfileCard>
@@ -41,21 +43,30 @@ export const AppointmentCard = ({
               size={14}
               color={situacao == "pendente" ? "#49B3BA" : "#8C8A97"}
             />
-            <TextBold situacao={situacao}>14:00</TextBold>
+
+            <TextBold situacao={situacao} color={"#49B3BA"}>
+              14:00
+            </TextBold>
           </ClockCard>
 
-          {/* valida e mostra o tipo de botão conforme a situação da consulta */}
-          {situacao == "cancelado" ? (
-            <></>
-          ) : situacao == "pendente" ? (
-            <ButtonCard onPress={onPressCancel}>
-              <ButtonText situacao={situacao}>Cancelar</ButtonText>
-            </ButtonCard>
-          ) : (
-            <ButtonCard>
-              <ButtonText situacao={situacao}>Ver prontuário</ButtonText>
-            </ButtonCard>
-          )}
+            {/* valida e mostra o tipo de botão conforme a situação */}
+
+            {
+                situacao == "cancelado" ? (
+                    <>
+                    </>
+                ) : situacao == "pendente" ? (
+                    <ButtonCard onPress={onPressCancel}>
+                        <ButtonText situacao={situacao}>Cancelar</ButtonText>
+                    </ButtonCard>
+                ) : (
+                    <ButtonCard onPress={onPressAppointment}>
+                        <ButtonText situacao={situacao}>Ver Prontuário</ButtonText>
+                    </ButtonCard>
+                )
+            }
+
+          
         </ViewRow>
       </ContentCard>
     </ContainerCardsList>

@@ -10,3 +10,9 @@ export const ButtonTitle = styled.Text`
 export const ButtonTitleGoogle = styled(ButtonTitle)`
     color: #496BBA;
 `
+
+export const ButtonSecondaryTitle = styled(ButtonTitle)`
+  text-transform: capitalize;
+  text-decoration: underline;
+  color: #344f8f;
+`;

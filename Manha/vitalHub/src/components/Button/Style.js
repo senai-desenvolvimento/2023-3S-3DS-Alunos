@@ -24,8 +24,6 @@ export const ButtonSecondary = styled(Button)`
     background-color: transparent;
     border: none;
 `
-
-
 export const ButtonTitle = styled.Text`
   text-align: center;
   font-size: 14px;
@@ -40,4 +38,19 @@ text-decoration: underline;
 color: #344f8f;
 `
 
+export const ButtonModal = styled(Button)`
+    width: 80% ;
+`
 
+export const ButtonCancel = styled.TouchableOpacity`
+  width: 148px;
+  height: 44px;
+
+  margin-top: 10px;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 12px;
+  font-family: "MontserratAlternates_500Medium";
+`;

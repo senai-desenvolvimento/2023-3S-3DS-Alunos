@@ -1,31 +1,28 @@
-import {
-  Container,
-  ContainerFlex,
-  ContainerImage,
-  ContainerScroll,
-} from "../../components/Container/Style";
+import { ContainerFlex, ContainerImage, ContainerScroll } from "../../components/Container/Style";
 import { ProfileImageLarge } from "../../components/ProfileImage/Style";
 import { Title, Subtitle } from "../../components/Title/Style";
-import { Button, ButtonLogout } from "../../components/Button/Style";
+import { Button, ButtonEdit, ButtonLogout } from "../../components/Button/Style";
 import { ButtonTitle } from "../../components/ButtonTitle/Style";
 import { Label, LabelSmall } from "../../components/Label/Style";
 import { Input, InputSmall } from "../../components/Input/Style";
 import { ContentInputSmall } from "./Style";
+import { Content } from "../MedicoProntuario/Style";
+
 
 const PerfilPaciente = () => {
-
-  return (
+  return ( 
     <ContainerScroll>
-      <Container>
+      <Content>
         <ContainerImage>
           <ProfileImageLarge
-            source={{ uri: "https://github.com/enzoquarelo.png" }}
+            source={require("../../../assets/profileLargePatient.png")}
           />
         </ContainerImage>
+        
 
-        <Title>Dr.Enzo Quarelo</Title>
+        <Title>Richard Kosta</Title>
 
-        <Subtitle>22 anos enzo.quarelo@gmail.com</Subtitle>
+        <Subtitle>22 anos richard.kosta@gmail.com</Subtitle>
 
         <Label>Data de nascimento</Label>
         <Input placeholder="dd/mm/aaaa" />
@@ -52,14 +49,15 @@ const PerfilPaciente = () => {
           <ButtonTitle>Salvar</ButtonTitle>
         </Button>
 
-        <Button>
+        <ButtonEdit>
           <ButtonTitle>Editar</ButtonTitle>
-        </Button>
+        </ButtonEdit>
 
-        <ButtonLogout onPress={() => {removerLogin()}}>
+        <ButtonLogout onPress={() => {}} >
           <ButtonTitle>Sair do app</ButtonTitle>
         </ButtonLogout>
-      </Container>
+
+      </Content>
     </ContainerScroll>
   );
 };

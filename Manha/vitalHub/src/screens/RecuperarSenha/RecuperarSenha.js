@@ -1,26 +1,20 @@
-
-import { AntDesign } from "@expo/vector-icons";
-import { ContentLogo } from "./Style";
-import { Container, ContainerLogo } from "../../components/Container/Style";
+import { Title, Subtitle } from "../../components/Title/Style";
 import { Logo } from "../../components/Logo/Style";
-import { Subtitle, Title } from "../../components/Title/Style";
+import { Container, ContainerLogo } from "../../components/Container/Style";
 import { Input } from "../../components/Input/Style";
-import { Button, ButtonTitle } from "../../components/Button/Style";
+import { Button } from "../../components/Button/Style";
+import { ButtonTitle } from "../../components/ButtonTitle/Style";
+import { ContentLogo } from "./Style";
+import { ButtonIconBack } from "../../components/ButtonIconBack/ButtonIconBack";
 
-export const RecuperarSenha = () => {
+const RecuperarSenha = ({ navigation }) => {
   return (
     <Container>
       <ContainerLogo>
         <ContentLogo>
-          <AntDesign
-            name="arrowleft"
-            size={30}
-            color="#34898F"
-            onPress={() => {}}
-          />
+          <ButtonIconBack navigation={navigation} />
         </ContentLogo>
-
-        <Logo source={require("../../assets/logo.png")} />
+        <Logo source={require("../../../assets/logo.png")} />
       </ContainerLogo>
 
       <Title>Recuperar senha</Title>
@@ -32,9 +26,11 @@ export const RecuperarSenha = () => {
 
       <Input placeholder="Usuário ou E-mail" />
 
-      <Button onPress={() => {}}>
+      <Button>
         <ButtonTitle>Continuar</ButtonTitle>
       </Button>
     </Container>
   );
 };
+
+export default RecuperarSenha;

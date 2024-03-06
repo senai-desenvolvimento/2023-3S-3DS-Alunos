@@ -1,11 +1,20 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 
+// Titulo principal das páginas
 export const Title = styled.Text`
-font-size: 20px ;
-margin-bottom: 5px ;
-color:#33303e ;
-font-family: 'MontserratAlternates_600SemiBold' ;
+  align-self: center;
+
+  font-size: 20px; 
+  color: #33303e;
+  font-family: "MontserratAlternates_600SemiBold";
+`;
+
+export const TitleSelect = styled(Title)`
+  margin-top: 30px;
+  margin-bottom: 35px ;
 `
+
+// Texto principal do app
 export const Subtitle = styled.Text`
   width: 80%;
   color: #5f5c6b;  

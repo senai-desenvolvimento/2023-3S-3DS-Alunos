@@ -1,17 +1,35 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
+
+export const ButtonTitleGoogle = styled.Text`
+  text-align: center;
+
+  color: #496BBA;
+  text-transform: uppercase;
+  font-family: "MontserratAlternates_700Bold";
+`;
 
 export const ContentAccount = styled.View`
-    width: 90% ;
+  width: 320px;
+  gap: 5px;
 
-    margin-top: 30px;
-
-    flex-direction:row ;
-    align-self: center ;
-    justify-content:center ;
-`
+  flex-direction: row;
+  justify-content: center;
+  align-self: center;
+`;
 
 export const TextAccount = styled.Text`
-    font-size: 16px ;
-    font-family:'MontserratAlternates_600SemiBold' ;
-    color:#4E4B59 ;
-`
+  margin-top: 30px;
+  font-Family: "MontserratAlternates_600SemiBold";
+  font-size: 14px;
+  color: #4E4B59;
+`;
+
+export const TextPassword = styled.Text`
+  font-family: "MontserratAlternates_500Medium";
+  color: #8C8A97;
+  width: 320px;
+  align-self: center;
+  margin-top: 10px;
+  font-size: 14px;
+`;
+

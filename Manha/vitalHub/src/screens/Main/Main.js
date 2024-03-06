@@ -27,13 +27,23 @@ export const Main = () => {
           if( route.name === "Home" )
           {
             return (
-              <>
-              </>
+              <ContentIcon 
+                tabBarActiveBackgroundColor={ focused ? "#ECF2FF" : "transparent" }
+              >
+                <FontAwesome name='calendar' size={18} color="#4E4B59" />
+                { focused && <TextIcon>Agenda</TextIcon> }
+              </ContentIcon>
             )
           }else{
-
+            return (
+              <ContentIcon 
+                tabBarActiveBackgroundColor={ focused ? "#ECF2FF" : "transparent" }
+              >
+                <FontAwesome5 name='user-circle' size={22} color="#4E4B59" />
+                { focused && <TextIcon>Perfil</TextIcon> }
+              </ContentIcon>
+            )
           }
-
         }
       }) }
     >

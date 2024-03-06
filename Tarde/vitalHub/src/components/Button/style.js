@@ -1,46 +1,52 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 export const Button = styled.TouchableOpacity`
-    width: 90% ;
-    height: 44px ;
+  width: 90%;
+  height: 44px;
 
-    background-color: #496bba ;
-    border-radius: 5px ;
-    border: 1px solid #496bba ;
+  margin-top: 30px;
+  align-self: center;
+  justify-content: center;
 
-    margin-top: 15px ;
-    padding: 12px 8px 12px 8px ;
-
-    align-items: center ;
-    justify-content:center ;
-`
-
-export const ButtonGoogle = styled(Button)`
-    background-color: #FAFAFA ;
-    flex-direction: row ;
-    gap: 10px;
-`
-export const ButtonSecondary = styled(Button)`
-    background-color: transparent;
-    border: none;
-`
-export const ButtonTitle = styled.Text`
-  text-align: center;
-  font-size: 14px;
-  color: #ffffff;
-  text-transform: uppercase;
-  font-family: "MontserratAlternates_700Bold";
+  background-color: #496bba;
+  border-radius: 5px;
+  border-color: #00bfa6;
 `;
 
-export const ButtonSecondaryTitle = styled(ButtonTitle)`
-text-transform: capitalize;
-text-decoration: underline;
-color: #344f8f;
-`
+export const ButtonGoogle = styled(Button)`
+  gap: 20px;
+
+  margin-top: 15px;
+  flex-direction: row;
+  align-items: center;
+
+  background-color: #fafafa;
+  border-color: #496bba;
+  border-width: 1px;
+`;
+
+export const ButtonSecondary = styled(Button)`
+  background-color: transparent;
+  border: none;
+  margin-bottom: 30px ;
+`;
 
 export const ButtonModal = styled(Button)`
-    width: 80% ;
-`
+  width: 285px;
+`;
+
+export const ButtonSendImage = styled(Button)`
+  width: 172px;
+
+  margin-top: 10px;
+  align-items: center;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  background-color: #49b3ba;
+  border-color: none;
+`;
 
 export const ButtonCancel = styled.TouchableOpacity`
   width: 148px;
@@ -54,3 +60,13 @@ export const ButtonCancel = styled.TouchableOpacity`
   font-size: 12px;
   font-family: "MontserratAlternates_500Medium";
 `;
+
+export const ButtonLogout = styled(Button)`
+  background-color: #c1c1c1;
+  width: 40%;
+  margin-bottom: 30px;
+`;
+
+export const ButtonEdit = styled(Button)`
+  background-color: #c1c1c1;
+`

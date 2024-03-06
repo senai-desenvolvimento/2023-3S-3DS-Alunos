@@ -1,75 +1,54 @@
-import moment from "moment";
-import { StyleSheet } from "react-native";
-import { StyledCalendarStrip } from "./Style";
+import { StyleSheet } from 'react-native';
+import { StyledCalendarStrip } from './style'
 
-export const CalendarHome = () => {
+import moment from 'moment-timezone';
 
-      //define padrão pt-br para calendário
+const CalendarList = () => {
+  // Configura o fuso horário padrão para UTC-3
+  moment.tz.setDefault('America/Sao_Paulo');
+
   moment.updateLocale("pt-br", {
-
-    //meses
     months:
       "Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro".split(
         "_"
       ),
-
-    //abreviação de meses
     monthsShort: "jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez".split("_"),
-
-    //dias da semana
     weekdays:
       "domingo_segunda-feira_terça-feira_quarta-feira_quinta-feira_sexta-feira_sábado".split(
         "_"
       ),
-
-    //abreviação dias da semana
     weekdaysShort: "Dom_Seg_Ter_Qua_Qui_Sex_Sáb".split("_"),
-
-    //abreviação dias da semana 
     weekdaysMin : 'dom_2ª_3ª_4ª_5ª_6ª_sáb'.split('_'),
   });
   
-  //instância da data atual
   const currentDate = new Date();
-
-  //define a data inicial como sendo o primeiro dia do mês
   const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-
-  //define a data final como sendo o último dia do mês
   const endingDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-    return(
-        <StyledCalendarStrip
-      // animação e seleção de cada data
+
+  return (
+    <StyledCalendarStrip 
       calendarAnimation={{ type: "sequence", duration: 30 }}
       daySelectionAnimation={ styles.selectedAnimationStyle }
 
-      // seta esquerda e direita para avançar e voltar(aqui como display none)
       iconLeftStyle={styles.iconsStyle}
       iconRightStyle={styles.iconsStyle}
 
-      // deixa uma marcação default - data atual
       selectedDate={currentDate}
-      // dia que começamos a visualizar a barra
       startingDate={moment()}
 
-      //data min e max - início do mês e final do mês
       minDate={startingDate}
       maxDate={endingDate}
       
-      //estilização dos itens que não estão selecionados
       calendarHeaderStyle={ styles.calendarHeaderStyle }
       dateNumberStyle={ styles.numberDateStyle }
       dateNameStyle={ styles.nameDateStyle }
 
-      // estilização do item que está selecionado - efeito do item marcado
       highlightDateNameStyle={ styles.selectedDateNameStyle }
       highlightDateNumberStyle={ styles.selectedDateNumberStyle }
       highlightDateContainerStyle={ styles.selectedContainerStyle }
 
-      //tamanho do container
       iconContainer={{ flex: 0.1 }}
-      
-      //scroll da barra
+      // innerStyle={{ backgroundColor: 'green', flex:1, width : '100%'}}
       scrollable={true}
     />
   );
@@ -116,3 +95,5 @@ const styles = StyleSheet.create({
     borderHighlightColor: "#49B3BA"
   }
 })
+
+export default CalendarList;

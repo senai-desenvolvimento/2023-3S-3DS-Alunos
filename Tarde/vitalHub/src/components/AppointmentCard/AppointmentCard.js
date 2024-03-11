@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons'
 
 import { CardDasConsulta, NomePerfil, ImagePerfil,
@@ -5,7 +6,10 @@ import { CardDasConsulta, NomePerfil, ImagePerfil,
           TextoSimples, TextoNegrito, ClockCard,
           ViewRow, ButtonCard, ButtonText } from './styles'
 
-const AppointmentCard = ({ situacao = 'pendente', onConnectCancelar, onConnectAppointment }) => {
+const AppointmentCard = ({ navigation, situacao = 'pendente', onConnectCancelar, onConnectAppointment }) => {
+  
+  const [profile, setProfile] = useState("Paciente")
+
   return (
     <CardDasConsulta onPress={situacao == 'pendente' ? onConnectAppointment : null } >
       <ImagePerfil source={{ uri : "https://github.com/LucSilveira.png" }} />
@@ -35,7 +39,7 @@ const AppointmentCard = ({ situacao = 'pendente', onConnectCancelar, onConnectAp
                   <ButtonText situacao={situacao}>Cancelar</ButtonText>
                 </ButtonCard>
               ) : (
-                <ButtonCard onPress={onConnectAppointment}>
+                <ButtonCard onPress={profile !== "Paciente" ? onConnectAppointment : () => navigation.replace("Paciente Prontuario")}>
                   <ButtonText situacao={situacao}>Ver prontuário</ButtonText>
                 </ButtonCard>
               )

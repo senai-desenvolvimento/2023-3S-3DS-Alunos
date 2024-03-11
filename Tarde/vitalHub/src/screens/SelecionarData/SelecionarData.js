@@ -8,7 +8,7 @@ import { ButtonSecondary } from "../../components/Button/Style";
 import { ButtonSecondaryTitle } from "../../components/ButtonTitle/Style";
 import SelectInput from "../../components/SelectInput/SelectInput";
 
-const SelecionarData = () => {
+const SelecionarData = ({ navigation }) => {
   return (
     <Container>
       <TitleSelect>Selecionar data</TitleSelect>
@@ -25,7 +25,7 @@ const SelecionarData = () => {
         </ButtonTitle>
       </Button>
 
-      <ButtonSecondary>
+      <ButtonSecondary onPress={ () => navigation.replace("Main")}>
         <ButtonSecondaryTitle>
           Cancelar
         </ButtonSecondaryTitle>

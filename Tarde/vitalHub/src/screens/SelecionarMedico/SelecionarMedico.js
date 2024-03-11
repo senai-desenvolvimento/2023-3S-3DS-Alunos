@@ -15,7 +15,7 @@ const Medicos = [
     {id: 6, nome: "Usmar", especialidade: "Cardiologista"},
 ]
 
-const SelecionarMedico = () => {
+const SelecionarMedico = ({ navigation }) => {
   return (
     <Container>
       <TitleSelect>Selecionar médico</TitleSelect>
@@ -29,11 +29,11 @@ const SelecionarMedico = () => {
         showsVerticalScrollIndicator={false}
       />
 
-      <Button>
+      <Button onPress={ () => navigation.replace("Calendar")}>
         <ButtonTitle>Continuar</ButtonTitle>
       </Button>
 
-      <ButtonSecondary>
+      <ButtonSecondary onPress={ () => navigation.replace("Main")}>
         <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
       </ButtonSecondary>
 

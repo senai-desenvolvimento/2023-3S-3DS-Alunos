@@ -28,7 +28,7 @@ const Consultas = [
 ];
 
 //tela home
-const Home = () => {
+const Home = ({ navigation }) => {
 
   //state para status da lista - inicia em "pendente"
   const [statusLista, setStatusLista] = useState("pendente");
@@ -45,7 +45,7 @@ const Home = () => {
     <ContainerHome>
       
       {/* cria o header */}
-      <Header />
+      <Header  navigation={navigation} />
 
       {/* cria o calendário */}
       <CalendarList />
@@ -81,6 +81,7 @@ const Home = () => {
             // cria card de consulta da tela home
             <AppointmentCard
               situacao={item.situacao}
+              navigation={navigation}
               onConnectCancelar={() => setShowModalCancelar(true)}
               onConnectAppointment={() => setShowModalAppointment(true)}
             />
@@ -104,6 +105,8 @@ const Home = () => {
       />
       {/* Passando direto a propriedade para exibicao do modal - prontuário */}
       <AppointmentModal
+        navigation={navigation}
+
         situacao={statusLista}
         visible={showModalAppointment}
         setShowModalAppointment={setShowModalAppointment}
@@ -111,6 +114,7 @@ const Home = () => {
 
       <AgendarConsulta
         visible={showModalAgendamento}
+        navigation={navigation}
         setShowModalAgendamento={setShowModalAgendamento}
       />
     </ContainerHome>

@@ -33,7 +33,7 @@ const clinicas = [
   },
 ];
 
-const SelecionarClinica = () => {
+const SelecionarClinica = ({ navigation }) => {
   return (
     // <Container enabled behavior={ Platform.OS === 'ios'? 'padding': null}>
     <Container>
@@ -53,11 +53,11 @@ const SelecionarClinica = () => {
         showsVerticalScrollIndicator={false}
       />
 
-      <Button>
+      <Button onPress={ () => navigation.replace("Selecionar Medico")}>
         <ButtonTitle>Continuar</ButtonTitle>
       </Button>
 
-      <ButtonSecondary>
+      <ButtonSecondary onPress={ () => navigation.replace("Main")}>
         <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
       </ButtonSecondary>
     </Container>

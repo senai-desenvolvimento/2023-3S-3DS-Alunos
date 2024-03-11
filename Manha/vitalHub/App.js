@@ -51,7 +51,9 @@ export default function App() {
     return (
       <NavigationContainer>
         
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{ headerShown : false }}
+        >
 
           <Stack.Screen
             name="Login"
@@ -140,6 +142,12 @@ export default function App() {
             name="Calendar"
             component={SelecionarData}
             options={{ title: "Calendar" }}
+          />
+
+          <Stack.Screen
+            name="Local consulta"
+            component={LocalConsulta}
+            options={{ title: "Local consulta" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

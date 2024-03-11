@@ -28,7 +28,7 @@ const Consultas = [
 ];
 
 //tela home
-const Home = () => {
+const Home = ({ navigation }) => {
 
   //state para status da lista - inicia em "pendente"
   const [statusLista, setStatusLista] = useState("pendente");
@@ -81,6 +81,7 @@ const Home = () => {
             // cria card de consulta da tela home
             <AppointmentCard
               situacao={item.situacao}
+              navigation={navigation}
               onConnectCancelar={() => setShowModalCancelar(true)}
               onConnectAppointment={() => setShowModalAppointment(true)}
             />
@@ -110,6 +111,7 @@ const Home = () => {
       />
 
       <AgendarConsulta
+        navigation={navigation}
         visible={showModalAgendamento}
         setShowModalAgendamento={setShowModalAgendamento}
       />

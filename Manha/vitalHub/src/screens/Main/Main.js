@@ -10,6 +10,8 @@ import PerfilPaciente from '../PerfilPaciente/PerfilPaciente'
 
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 
+import { ContentIcon, TextIcon } from './Style'
+
 export const Main = () => {
   return (
     <BottomTab.Navigator

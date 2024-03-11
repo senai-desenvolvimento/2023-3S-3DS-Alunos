@@ -35,7 +35,7 @@ const AppointmentModal = ({
           </RowTextModal>
 
           {situacao !== "pendente" ? (
-            <ButtonModal>
+            <ButtonModal >
               <ButtonTitle>Inserir prontuário </ButtonTitle>
             </ButtonModal>
           ) : (

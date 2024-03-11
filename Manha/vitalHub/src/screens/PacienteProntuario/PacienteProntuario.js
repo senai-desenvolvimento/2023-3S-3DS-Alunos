@@ -9,7 +9,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Linha } from "./Style";
 import { Content } from "../MedicoProntuario/Style";
 
-const PacienteProntuario = () => {
+const PacienteProntuario = ({ navigation }) => {
   return (
     <ContainerScroll>
       <Content>
@@ -55,7 +55,7 @@ const PacienteProntuario = () => {
 
         <InputLarge placeholder="Descrição do exame" />
 
-        <ButtonSecondary>
+        <ButtonSecondary onPress={() => navigation.replace("Main") }>
           <ButtonSecondaryTitle>Voltar</ButtonSecondaryTitle>
         </ButtonSecondary>
       </Content>

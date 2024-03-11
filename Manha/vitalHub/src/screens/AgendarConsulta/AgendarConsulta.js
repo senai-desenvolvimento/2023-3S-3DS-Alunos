@@ -14,11 +14,17 @@ const types = [
   { id : 2, tipo : 'Urgência'}
 ]
 
-const AgendarConsulta = ({ visible = true, setShowModalAgendamento, ...rest }) => {
+const AgendarConsulta = ({ navigation, visible = true, setShowModalAgendamento, ...rest }) => {
   const [tipoConsulta, setTipoConsulta] = useState('')
 
+  async function handleContinue(){
+    await setShowModalAgendamento(false)
+
+    navigation.replace("Selecionar clinica")
+  }
+
   return ( 
-    <Modal { ...rest } visible={visible} transparent={true} animationType='fade'>
+    <Modal { ...rest } visible={visible} transparent={true} animationType='fade' animationOutTiming={0}>
       <ModalContent>
         <ViewContainer>
 
@@ -50,7 +56,7 @@ const AgendarConsulta = ({ visible = true, setShowModalAgendamento, ...rest }) =
           <Label>Qual a localização desejada</Label>
           <Input placeholder='Informe a localização' />
 
-          <Button>
+          <Button onPress={ () => handleContinue()}>
             <ButtonTitle>
               Continuar
             </ButtonTitle>

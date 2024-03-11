@@ -14,10 +14,18 @@ import { ButtonTitle, ButtonSecondaryTitle } from "../ButtonTitle/Style";
 const AppointmentModal = ({
   situacao,
   visible,
+  navigation,
   setShowModalAppointment,
   typeProfile = "paciente",
   ...rest
 }) => {
+
+  async function handleClose( screen ){
+    await setShowModalAppointment(false)
+
+    navigation.replace( screen )
+  }
+
   return (
     <Modal {...rest} visible={visible} transparent={true} animationType="fade">
       <AppointmentContent>
@@ -35,11 +43,11 @@ const AppointmentModal = ({
           </RowTextModal>
 
           {situacao !== "pendente" ? (
-            <ButtonModal>
+            <ButtonModal onPress={ () => handleClose("Medico Prontuario") } >
               <ButtonTitle>Inserir prontuário </ButtonTitle>
             </ButtonModal>
           ) : (
-            <ButtonModal>
+            <ButtonModal onPress={ () => handleClose("Local consulta") }>
               <ButtonTitle>Ver local da consulta </ButtonTitle>
             </ButtonModal>
           )}

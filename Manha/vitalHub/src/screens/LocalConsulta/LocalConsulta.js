@@ -10,7 +10,7 @@ import { ContentImage, ContentLocale, MapImage } from "./Style";
 import { ButtonSecondary } from "../../components/Button/Style";
 import { ButtonSecondaryTitle } from "../../components/ButtonTitle/Style";
 
-const LocalConsulta = () => {
+const LocalConsulta = ({ navigation }) => {
   return (
     <Container>
       <ContentImage>
@@ -35,7 +35,7 @@ const LocalConsulta = () => {
             <InputSmall editable={false} placeholder="Moema-SP" />
           </ContentInputSmall>
         </ContainerFlex>
-        <ButtonSecondary>
+        <ButtonSecondary onPress={ () => navigation.replace("Main") } >
           <ButtonSecondaryTitle>Voltar</ButtonSecondaryTitle>
         </ButtonSecondary>
       </ContentLocale>

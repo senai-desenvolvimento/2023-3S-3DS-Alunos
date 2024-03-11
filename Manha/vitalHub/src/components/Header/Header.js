@@ -10,11 +10,11 @@ import {
 } from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const Header = () => {
+const Header = ({ navigation }) => {
   return (
     <ContainerHeader>
       <HeaderContent>
-        <BoxUser>
+        <BoxUser onPress={ () => navigation.navigate("Paciente Perfil") } >
           <ImageUser source={{ uri: "https://github.com/LucSilveira.png" }} />
 
           <DataUser>

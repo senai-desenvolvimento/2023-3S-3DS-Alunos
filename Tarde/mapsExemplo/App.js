@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 
 import {
   requestForegroundPermissionsAsync, // Solicita a permissao de localizacao
-  getCurrentPositionAsync // Captura a localizacao atual
+  getCurrentPositionAsync, // Captura a localizacao atual
+
+  watchPositionAsync, // Captura em tempos a localizacao
+  LocationAccuracy // Precisao da captura
 } from 'expo-location'
 
 import MapViewDirections from 'react-native-maps-directions'
@@ -13,23 +16,63 @@ import MapViewDirections from 'react-native-maps-directions'
 import { mapskey } from './utils/mapsKey';
 
 export default function App() {
+  const mapReference = useRef(null)
   const [initialPosition, setInitialPosition] = useState(null)
+  const [finalPosition, setPosition] = useState({
+    latitude: -23.2447,
+    longitude: -46.2640
+  })
 
   async function CapturarLocalizacao(){
     const { granted } = await requestForegroundPermissionsAsync()
+    console.log(granted);
 
     if( granted ){
       const currentPosition = await getCurrentPositionAsync()
-
+      console.log(currentPosition);
       await setInitialPosition( currentPosition )
 
       console.log( initialPosition )
     }
   }
 
+  async function RecarregarVisualizacaoMapa(){
+    if( mapReference.current && initialPosition )
+    {
+      await mapReference.current.fitToCoordinates(
+        [
+          { latitude : initialPosition.coords.latitude, longitude : initialPosition.coords.longitude },
+          { latitude : finalPosition.latitude, longitude : finalPosition.longitude }
+        ],
+        {
+          edgePadding : { top : 60, right : 60, bottom : 60, left : 60 },
+          animated : true
+        }
+      )
+    }
+  }
+
   useEffect(() => {
     CapturarLocalizacao()
-  }, [10000])
+
+    // Capturar localizacao em tempo real
+    watchPositionAsync({
+      accuracy : LocationAccuracy.High,
+      timeInterval : 1000,
+      distanceInterval : 1
+    }, async (response) => {
+      await setInitialPosition( response )
+
+      mapReference.current?.animateCamera({
+        pitch : 60,
+        center : response.coords
+      })
+    })
+  }, [1000])
+
+  useEffect(() => {
+    RecarregarVisualizacaoMapa()
+  }, [initialPosition == null])
 
   return (
     <View style={styles.container}>
@@ -37,6 +80,7 @@ export default function App() {
         initialPosition != null
         ? (
           <MapView 
+            ref={mapReference}
             initialRegion={{
               latitude : initialPosition.coords.latitude,
               longitude : initialPosition.coords.longitude,

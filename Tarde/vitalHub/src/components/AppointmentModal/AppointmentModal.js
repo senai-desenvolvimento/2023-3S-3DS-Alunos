@@ -1,34 +1,57 @@
+import {
+  AppointmentContent,
+  ModalContent,
+  TextModal,
+  ModalImage,
+  RowTextModal,
+} from "./style";
 import { Modal } from "react-native";
-import { AppointmentContent, ModalContent, ModalImage, RowTextModal, TextModal } from "./Style";
-import { Title } from "../Title/Style";
-import { ButtonCancel, ButtonModal, ButtonSecondaryTitle, ButtonTitle } from "../Button/Style";
 
-export const AppointmentModal = ({navigation, visible, setShowModalAppointment,typeProfile = 'paciente', ...rest}) => {
-    return ( 
-      <Modal {...rest} visible={visible} transparent={true} animationType='fade'>
-        <AppointmentContent>
-          <ModalContent>
-            <ModalImage source={{ uri: "https://github.com/ojuaum1.png" }} />
-  
-            <Title>João</Title>
-  
-            <RowTextModal>
-              <TextModal>45 anos</TextModal>
-  
-              <TextModal>joão.oliveira@gmail.com</TextModal>
-            </RowTextModal>
-  
-            <ButtonModal onPress={() => {
-              setShowModalAppointment(false)
-            }}>
-              <ButtonTitle>Prontuário </ButtonTitle>
+import { Title } from "../Title/Style";
+import { ButtonModal, ButtonCancel } from "../Button/Style";
+import { ButtonTitle, ButtonSecondaryTitle } from "../ButtonTitle/Style";
+
+const AppointmentModal = ({
+  situacao,
+  visible,
+  setShowModalAppointment,
+  typeProfile = "paciente",
+  ...rest
+}) => {
+  return (
+    <Modal {...rest} visible={visible} transparent={true} animationType="fade">
+      <AppointmentContent>
+        <ModalContent>
+          <ModalImage
+            source={require("../../../assets/profileLargeDoctor.png")}
+          />
+
+          <Title>Dr. Claudio</Title>
+
+          <RowTextModal>
+            <TextModal>Clinico Geral</TextModal>
+
+            <TextModal>CRM-15286</TextModal>
+          </RowTextModal>
+
+          {situacao !== "pendente" ? (
+            <ButtonModal >
+              <ButtonTitle>Inserir prontuário </ButtonTitle>
             </ButtonModal>
-  
-            <ButtonCancel onPress={() => setShowModalAppointment(false)}>
-              <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
-            </ButtonCancel>
-          </ModalContent>
-        </AppointmentContent>
-      </Modal>
-    );
-  };
+          ) : (
+            <ButtonModal>
+              <ButtonTitle>Ver local da consulta </ButtonTitle>
+            </ButtonModal>
+          )}
+
+          <ButtonCancel onPress={() => setShowModalAppointment(false)}>
+            <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
+          </ButtonCancel>
+
+        </ModalContent>
+      </AppointmentContent>
+    </Modal>
+  );
+};
+
+export default AppointmentModal;

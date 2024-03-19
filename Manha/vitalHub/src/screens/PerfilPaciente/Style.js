@@ -7,4 +7,5 @@ export const ContentInputSmall = styled.View`
   align-self: center;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px ;
 `;

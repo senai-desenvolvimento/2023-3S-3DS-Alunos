@@ -1,21 +1,32 @@
-import { ContainerHeader } from "../Container/Style";
-import { BoxUser, DataUser, ImageUser, NameUser, TextDefault } from "./Style";
+import { StatusBar } from "react-native";
+import {
+  ContainerHeader,
+  ImageUser,
+  BoxUser,
+  DataUser,
+  NomeUser,
+  TextDefault,
+  HeaderContent,
+} from "./styles";
 import { MaterialIcons } from "@expo/vector-icons";
 
-export const Header = () => {
+const Header = ({ navigation }) => {
   return (
     <ContainerHeader>
-        <BoxUser>
-          <ImageUser source={{ uri: "https://github.com/enzoquarelo.png" }} />
+      <HeaderContent>
+        <BoxUser onPress={ () => navigation.navigate("Paciente Perfil") } >
+          <ImageUser source={{ uri: "https://github.com/LucSilveira.png" }} />
+
           <DataUser>
-            <TextDefault>Bem vindo !</TextDefault>
-            <NameUser>Dr.Enzo</NameUser>
+            <TextDefault>Bem vindo</TextDefault>
+            <NomeUser>Dr. Claudio</NomeUser>
           </DataUser>
         </BoxUser>
 
-        {/* material icons */}
-        <MaterialIcons name="notifications" size={25} color="#fbfbfb" />
-    
+        <MaterialIcons name="notifications" size={25} color={"#fbfbfb"} />
+      </HeaderContent>
     </ContainerHeader>
   );
 };
+
+export default Header;

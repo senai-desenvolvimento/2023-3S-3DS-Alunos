@@ -1,74 +1,53 @@
-import { AntDesign } from "@expo/vector-icons";
-import {
-  ButtonCard,
-  ButtonText,
-  ClockCard,
-  ContainerCardsList,
-  ContentCard,
-  DataProfileCard,
-  ProfileData,
-  ProfileImage,
-  ProfileName,
-  TextAge,
-  TextBold,
-  ViewRow,
-} from "./Style";
+import { useState } from 'react';
+import { AntDesign } from '@expo/vector-icons'
 
-export const AppointmentCard = ({
-  situacao = "pendente",
-  onPressCancel,
-  onPressAppointment,
-}) => {
+import { CardDasConsulta, NomePerfil, ImagePerfil,
+          ConteudoCard, DadosPerfilCard, DadosPerfil,
+          TextoSimples, TextoNegrito, ClockCard,
+          ViewRow, ButtonCard, ButtonText } from './styles'
+
+
+const AppointmentCard = ({ navigation, situacao = 'pendente', onConnectCancelar, onConnectAppointment }) => {
+  const [profile, setProfile] = useState("Medico")
+
   return (
-    // container principal
-    <ContainerCardsList>
-      {/* imagem de perfil */}
-      <ProfileImage source={{ uri: "https://github.com/ojuaum1.png" }} />
+    <CardDasConsulta onPress={situacao == 'pendente' ? onConnectAppointment : null } >
+      <ImagePerfil source={{ uri : "https://github.com/LucSilveira.png" }} />
 
-      {/* conteúdo ao lado da imagem de perfil */}
-      <ContentCard>
-        <DataProfileCard>
-          <ProfileName>João</ProfileName>
+      <ConteudoCard>
+        <DadosPerfilCard>
+          <NomePerfil>Niccole Sarga</NomePerfil>
 
-          <ProfileData>
-            <TextAge>45 anos</TextAge>
-            <TextBold>Rotina</TextBold>
-          </ProfileData>
-        </DataProfileCard>
+          <DadosPerfil>
+            <TextoSimples>22 anos</TextoSimples>
+            <TextoNegrito>Rotina</TextoNegrito>
+          </DadosPerfil>
+        </DadosPerfilCard>
 
         <ViewRow>
           <ClockCard situacao={situacao}>
-            <AntDesign
-              name="clockcircle"
-              size={14}
-              color={situacao == "pendente" ? "#49B3BA" : "#8C8A97"}
-            />
-
-            <TextBold situacao={situacao} color={"#49B3BA"}>
-              14:00
-            </TextBold>
+            <AntDesign name='clockcircle' size={14} color={situacao == 'pendente' ? '#49B3BA' : '#8C8A97'} />
+            <TextoNegrito situacao={situacao} color={'#49B3BA'}>14:00</TextoNegrito>
           </ClockCard>
 
-            {/* valida e mostra o tipo de botão conforme a situação */}
-
-            {
-                situacao == "cancelado" ? (
-                    <>
-                    </>
-                ) : situacao == "pendente" ? (
-                    <ButtonCard onPress={onPressCancel}>
-                        <ButtonText situacao={situacao}>Cancelar</ButtonText>
-                    </ButtonCard>
-                ) : (
-                    <ButtonCard onPress={onPressAppointment}>
-                        <ButtonText situacao={situacao}>Ver Prontuário</ButtonText>
-                    </ButtonCard>
-                )
-            }
-
-          
+          { 
+            situacao == 'cancelado'
+              ? (
+                <></>
+              ) : situacao == 'pendente' ? (
+                <ButtonCard onPress={onConnectCancelar}>
+                  <ButtonText situacao={situacao}>Cancelar</ButtonText>
+                </ButtonCard>
+              ) : (
+                <ButtonCard onPress={profile == "Paciente" ? () => { navigation.replace("Paciente Prontuario") } : onConnectAppointment  }>
+                  <ButtonText situacao={situacao}>Ver prontuário</ButtonText>
+                </ButtonCard>
+              )
+          }
         </ViewRow>
-      </ContentCard>
-    </ContainerCardsList>
+      </ConteudoCard>
+    </CardDasConsulta>
   );
 };
+
+export default AppointmentCard

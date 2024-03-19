@@ -1,13 +1,11 @@
-import { ButtonTabsStyle, ButtonTextStyle } from "./Style";
+import { ButtonTabsStyle, ButtonTextStyle } from './style'
 
-export const AbsListAppointment = ({
-  textButton,
-  clickButton = false,
-  onPress,
-}) => {
+const AbsListAppointment = ({ textButton, clickButton = false, onPress }) => {
   return (
     <ButtonTabsStyle clickButton={clickButton} onPress={onPress}>
       <ButtonTextStyle clickButton={clickButton}>{textButton}</ButtonTextStyle>
     </ButtonTabsStyle>
   );
 };
+
+export default AbsListAppointment;

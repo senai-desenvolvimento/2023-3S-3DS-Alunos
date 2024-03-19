@@ -1,91 +1,124 @@
-import { StatusBar } from "react-native";
-import { Container } from "../../components/Container/Style";
-import { Header } from "../../components/Header/Header";
-import { CalendarHome } from "../../components/CalendarHome/CalendarHome";
-import { FilterAppointment } from "./Style";
-import { AbsListAppointment } from "../../components/AbsListAppointment/AbsListAppointment";
-import { useState } from "react";
-import { ListComponent } from "../../components/List/List";
-import { AppointmentCard } from "../../components/AppointmentCard/AppointmentCard";
-import { CancellationModal } from "../../components/CancellationModal/CancellationModal";
-import { AppointmentModal } from "../../components/AppointmentModal/AppointmentModal";
+import React, { useState } from "react";
 
+import { FilterAppointment } from "./styles";
+import { ListComponent } from "../../components/List/List";
+
+import Header from "../../components/Header/Header";
+import AppointmentCard from "../../components/AppointmentCard/AppointmentCard";
+import CancellationModal from "../../components/CancellationModal/CancellationModal";
+import AppointmentModal from "../../components/AppointmentModal/AppointmentModal";
+import AgendarConsulta from "../AgendarConsulta/AgendarConsulta";
+import { Container, ContainerHome } from "../../components/Container/Style";
+import CalendarList from "../../components/CalendarList/CalendarList";
+import AbsListAppointment from "../../components/AbsListAppointment/AbsListAppointment";
+
+import {
+  ConteinerScheduleImage,
+  ImageScheduleAppointment,
+} from "../../components/ConteinerScheduleImage/Style";
+import { StatusBar } from "expo-status-bar";
+
+//lista de consultas
 const Consultas = [
-  { id: 1, nome: "Carlos", situacao: "pendente" },
-  { id: 2, nome: "Carlos", situacao: "realizado" },
-  { id: 3, nome: "Carlos", situacao: "cancelado" },
-  { id: 4, nome: "Carlos", situacao: "realizado" },
-  { id: 5, nome: "Carlos", situacao: "cancelado" },
+  { id: 1, nome: "Lucas", situacao: "pendente" },
+  { id: 2, nome: "Lucas", situacao: "realizado" },
+  { id: 3, nome: "Lucas", situacao: "cancelado" },
+  { id: 4, nome: "Lucas", situacao: "realizado" },
+  { id: 5, nome: "Lucas", situacao: "cancelado" },
 ];
 
-export const Home = () => {
+//tela home
+const Home = ({ navigation }) => {
+
+  //state para status da lista - inicia em "pendente"
   const [statusLista, setStatusLista] = useState("pendente");
 
-  // Satate para os modais
-  const [showModalCancel, setShowModalCancel] = useState(false);
+  // criando a constante de exibição do modal
+  const [showModalCancelar, setShowModalCancelar] = useState(false);
   const [showModalAppointment, setShowModalAppointment] = useState(false);
+  const [showModalAgendamento, setShowModalAgendamento] = useState(false);
+
+  // state perfil usuário
+  const [profile, setProfile] = useState("Paciente");
 
   return (
-    <Container>
-      <StatusBar />
+    <ContainerHome>
+      
+      {/* cria o header */}
+      <Header  navigation={navigation} />
 
-      {/* Header */}
-      <Header />
+      {/* cria o calendário */}
+      <CalendarList />
 
-      {/* Calendar */}
-      <CalendarHome />
-
-      {/* Filtros (button) */}
-
-      {/* Container */}
+      {/* cria seção do filtro das consultas */}
       <FilterAppointment>
-        {/* Botão agendado */}
+        {/* cria botão para filtrar consultas - pendente */}
         <AbsListAppointment
           textButton={"Agendadas"}
           clickButton={statusLista === "pendente"}
-          onPress={() => setStatusLista("pendente")}
+          onPress={(e) => setStatusLista("pendente")}
         />
-
-        {/* Botão realizado */}
+        {/* cria botão para filtrar consultas - realizado */}
         <AbsListAppointment
           textButton={"Realizadas"}
           clickButton={statusLista === "realizado"}
-          onPress={() => setStatusLista("realizado")}
+          onPress={(e) => setStatusLista("realizado")}
         />
-
-        {/* Botão cancelado */}
+        {/* cria botão para filtrar consultas - cancelado */}
         <AbsListAppointment
           textButton={"Canceladas"}
-          clickButton={statusLista === "cancelado"}
-          onPress={() => setStatusLista("cancelado")}
+          clickButton={statusLista == "cancelado"}
+          onPress={(e) => setStatusLista("cancelado")}
         />
       </FilterAppointment>
 
-      {/* Cards */}
-      {/* Lista (FlatList) */}
+      {/* cria o mapeamento da lista de consultas (cards) */}
       <ListComponent
         data={Consultas}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) =>
           statusLista == item.situacao && (
+            // cria card de consulta da tela home
             <AppointmentCard
               situacao={item.situacao}
-              onPressCancel={() => setShowModalCancel(true)}
-              onPressAppointment={() => setShowModalAppointment(true)}
+              navigation={navigation}
+              onConnectCancelar={() => setShowModalCancelar(true)}
+              onConnectAppointment={() => setShowModalAppointment(true)}
             />
           )
         }
+        showsVerticalScrollIndicator={false}
       />
 
+      {profile === "Paciente" && (
+        <ConteinerScheduleImage onPress={() => setShowModalAgendamento(true)}>
+          <ImageScheduleAppointment
+            source={require("../../../assets/agendar.png")}
+          />
+        </ConteinerScheduleImage>
+      )}
+
+      {/* Passando direto a propriedade para exibicao do modal - cancelar */}
       <CancellationModal
-        visible={showModalCancel}
-        setShowModalCancel={setShowModalCancel}
+        visible={showModalCancelar}
+        setShowModalCancelar={setShowModalCancelar}
       />
-
+      {/* Passando direto a propriedade para exibicao do modal - prontuário */}
       <AppointmentModal
+        navigation={navigation}
+
+        situacao={statusLista}
         visible={showModalAppointment}
         setShowModalAppointment={setShowModalAppointment}
       />
-    </Container>
+
+      <AgendarConsulta
+        visible={showModalAgendamento}
+        navigation={navigation}
+        setShowModalAgendamento={setShowModalAgendamento}
+      />
+    </ContainerHome>
   );
 };
+
+export default Home;

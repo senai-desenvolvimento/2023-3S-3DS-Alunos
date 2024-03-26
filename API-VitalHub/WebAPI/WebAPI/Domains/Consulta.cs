@@ -33,5 +33,5 @@ public partial class Consulta
 
     public virtual Receita? Receita { get; set; }
 
-    public virtual Situaco? Situacao { get; set; }
+    public virtual SituacaoConsulta? Situacao { get; set; }
 }

@@ -25,8 +25,6 @@ namespace WebAPI.Repositories
 
         }
 
-        
-
         public Usuario BuscarPorEmailESenha(string email, string senha)
         {
            // var user = ctx.Usuarios.FirstOrDefault

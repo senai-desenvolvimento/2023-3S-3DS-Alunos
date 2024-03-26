@@ -36,7 +36,7 @@ public partial class VitalContext : DbContext
 
     public virtual DbSet<Receita> Receitas { get; set; }
 
-    public virtual DbSet<Situaco> Situacoes { get; set; }
+    public virtual DbSet<SituacaoConsulta> Situacoes { get; set; }
 
     public virtual DbSet<TiposUsuario> TiposUsuarios { get; set; }
 
@@ -44,7 +44,7 @@ public partial class VitalContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-B541VSR; initial catalog=VitalHub; Trusted_Connection=True; Integrated Security=true; TrustServerCertificate=true");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-B541VSR; initial catalog=VitalHub; Trusted_Connection=True; Integrated Security=true; TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,14 +60,17 @@ public partial class VitalContext : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(225)
                 .IsUnicode(false);
-            entity.Property(e => e.Latitude).HasColumnType("decimal(8, 6)");
-            entity.Property(e => e.Longitude).HasColumnType("decimal(9, 6)");
+            entity.Property(e => e.EnderecoId).HasColumnName("EnderecoID");
             entity.Property(e => e.NomeFantasia)
                 .HasMaxLength(150)
                 .IsUnicode(false);
             entity.Property(e => e.RazaoSocial)
                 .HasMaxLength(150)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.Endereco).WithMany(p => p.Clinicas)
+                .HasForeignKey(d => d.EnderecoId)
+                .HasConstraintName("FK_Clinicas_Enderecos");
         });
 
         modelBuilder.Entity<Consulta>(entity =>
@@ -114,9 +117,11 @@ public partial class VitalContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("CEP");
+            entity.Property(e => e.Latitude).HasColumnType("decimal(8, 6)");
             entity.Property(e => e.Logradouro)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Longitude).HasColumnType("decimal(9, 6)");
         });
 
         modelBuilder.Entity<Especialidade>(entity =>
@@ -155,7 +160,12 @@ public partial class VitalContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("CRM");
+            entity.Property(e => e.EnderecoId).HasColumnName("EnderecoID");
             entity.Property(e => e.EspecialidadeId).HasColumnName("EspecialidadeID");
+
+            entity.HasOne(d => d.Endereco).WithMany(p => p.Medicos)
+                .HasForeignKey(d => d.EnderecoId)
+                .HasConstraintName("FK_Medicos_Enderecos");
 
             entity.HasOne(d => d.Especialidade).WithMany(p => p.Medicos)
                 .HasForeignKey(d => d.EspecialidadeId)
@@ -234,7 +244,7 @@ public partial class VitalContext : DbContext
             entity.Property(e => e.Observacoes).HasColumnType("text");
         });
 
-        modelBuilder.Entity<Situaco>(entity =>
+        modelBuilder.Entity<SituacaoConsulta>(entity =>
         {
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
@@ -252,8 +262,8 @@ public partial class VitalContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("ID");
             entity.Property(e => e.TipoUsuario)
-                .HasMaxLength(10)
-                .IsFixedLength();
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Usuario>(entity =>

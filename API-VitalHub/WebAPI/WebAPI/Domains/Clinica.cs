@@ -13,11 +13,11 @@ public partial class Clinica
 
     public string? RazaoSocial { get; set; }
 
-    public decimal? Latitude { get; set; }
-
-    public decimal? Longitude { get; set; }
-
     public string? Email { get; set; }
+
+    public Guid? EnderecoId { get; set; }
+
+    public virtual Endereco? Endereco { get; set; }
 
     public virtual ICollection<MedicosClinica> MedicosClinicas { get; set; } = new List<MedicosClinica>();
 }

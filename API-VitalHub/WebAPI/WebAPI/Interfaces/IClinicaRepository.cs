@@ -6,8 +6,8 @@ namespace WebAPI.Interfaces
     {
         public void Cadastrar(Clinica clinica);
 
-        public List<Clinica> ListarTodos();
+        public List<Clinica> Listar();
 
-        public Clinica BuscarPorId(int id);
+        public Clinica BuscarPorId(Guid id);
     }
 }

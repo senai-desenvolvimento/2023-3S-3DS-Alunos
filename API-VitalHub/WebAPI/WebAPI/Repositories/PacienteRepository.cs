@@ -46,6 +46,14 @@ namespace WebAPI.Repositories
             return ctx.Consultas.Include(x => x.Situacao).Where(x => x.PacienteId == Id && x.Situacao.Situacao == "Cancelada").ToList();
         }
 
+        public List<Consulta> BuscarPorData(DateTime dataConsulta, Guid idPaciente)
+        {
+           return ctx.Consultas
+                .Include(x => x.Situacao)
+                .Where(x  => x.PacienteId == idPaciente && x.DataConsulta == dataConsulta)
+                .ToList();
+        }
+
         public Paciente BuscarPorId(Guid Id)
         {
             return ctx.Pacientes.FirstOrDefault(x => x.Id == Id);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebAPI.Domains;
 
-public partial class Situaco
+public partial class SituacaoConsulta
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 

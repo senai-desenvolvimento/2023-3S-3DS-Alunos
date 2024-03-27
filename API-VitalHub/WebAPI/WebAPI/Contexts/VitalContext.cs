@@ -117,6 +117,9 @@ public partial class VitalContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("CEP");
+            entity.Property(e => e.Cidade)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.Latitude).HasColumnType("decimal(8, 6)");
             entity.Property(e => e.Logradouro)
                 .HasMaxLength(50)

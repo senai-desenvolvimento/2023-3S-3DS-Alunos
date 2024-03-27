@@ -15,21 +15,29 @@ namespace WebAPI.Repositories
 
         public Medico AtualizarPerfil(Guid Id, MedicoViewModel medico)
         {
-            Medico medicoBuscado = ctx.Medicos.FirstOrDefault(x => x.Id == Id);
 
-            if (medicoBuscado == null) return null;
+            Medico medicoBuscado = ctx.Medicos.FirstOrDefault(x => x.Id == Id)!;
 
-            if (medico.Crm != null)
-                medicoBuscado.Crm = medico.Crm;
+
+            if (medicoBuscado == null) return null!;
+
+            if (medico.Foto != null)
+                medicoBuscado.IdNavigation.Foto = medico.Foto;
 
             if (medico.EspecialidadeId != null)
                 medicoBuscado.EspecialidadeId = medico.EspecialidadeId;
 
-            if (medico.Senha != null)
-                medicoBuscado.IdNavigation.Senha = medico.Senha;
+            if (medico.Crm != null)
+                medicoBuscado.Crm = medico.Crm;
 
-            if (medico.Foto != null)
-                medicoBuscado.IdNavigation.Foto = medico.Foto;
+            if (medico.Logradouro != null)
+                medicoBuscado.Endereco!.Logradouro = medico.Logradouro;
+
+            if (medico.Numero != null)
+                medicoBuscado.Endereco!.Numero = medico.Numero;
+
+            if (medico.Cep != null)
+                medicoBuscado.Endereco!.Cep = medico.Cep;
 
             ctx.Medicos.Update(medicoBuscado);
             ctx.SaveChanges();
@@ -87,7 +95,8 @@ namespace WebAPI.Repositories
                     Id=mc.Id,
                     Crm = mc.Medico!.Crm,
                     Especialidade = mc.Medico.Especialidade,
-                    IdNavigation =new Usuario
+
+                    IdNavigation = new Usuario
                     {
                         Id = mc.Medico.IdNavigation.Id,
                         Nome = mc.Medico.IdNavigation.Nome,

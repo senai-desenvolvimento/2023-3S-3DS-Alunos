@@ -34,5 +34,11 @@ namespace WebAPI.Controllers
         {
             return Ok(clinicaRepository.BuscarPorId(id));
         }
+
+        [HttpGet("BuscarPorCidade")]
+        public IActionResult GetByCity(string cidade)
+        {
+            return Ok(clinicaRepository.ListarPorCidade(cidade));
+        }
     }
 }

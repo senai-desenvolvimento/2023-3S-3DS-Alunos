@@ -60,6 +60,7 @@ namespace WebAPI.Repositories
             List<Consulta> listaConsultas = ctx.Consultas
                 .Include(x => x.MedicoClinica)
                 .Include(x => x.Paciente)
+                .Include(x => x.Situacao)
                 .Where(x => x.PacienteId != null && x.PacienteId == IdPaciente)
                 .ToList();
 

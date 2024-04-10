@@ -13,10 +13,6 @@ namespace WebAPI.Repositories
 
         public Paciente AtualizarPerfil(Guid Id, PacienteViewModel paciente)
         {
-            //foto
-            //data nascimento
-            //cpf
-            //endereco logradouro numero cep
 
             Paciente pacienteBuscado = ctx.Pacientes.FirstOrDefault(x => x.Id == Id)!;
 
@@ -58,18 +54,21 @@ namespace WebAPI.Repositories
         {
            return ctx.Consultas
                 .Include(x => x.Situacao)
-                .Where(x  => x.PacienteId == idPaciente && x.DataConsulta == dataConsulta)
+                .Where(x => x.PacienteId ==  idPaciente && EF.Functions.DateDiffDay(x.DataConsulta, dataConsulta) == 0)
                 .ToList();
         }
 
         public Paciente BuscarPorId(Guid Id)
         {
-            return ctx.Pacientes.FirstOrDefault(x => x.Id == Id);
+            return ctx.Pacientes
+                .Include(x => x.IdNavigation)
+                .Include(x => x.Endereco)
+                .FirstOrDefault(x => x.Id == Id)!;
         }
 
         public List<Consulta> BuscarRealizadas(Guid Id)
         {
-            return ctx.Consultas.Include(x => x.Situacao).Where(x => x.PacienteId == Id && x.Situacao.Situacao == "Realizada").ToList();
+            return ctx.Consultas.Include(x => x.Situacao).Where(x => x.PacienteId == Id && x.Situacao!.Situacao == "Realizada").ToList();
         }
 
         public void Cadastrar(Usuario user)

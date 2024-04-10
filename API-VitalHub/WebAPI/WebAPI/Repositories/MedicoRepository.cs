@@ -57,6 +57,14 @@ namespace WebAPI.Repositories
 
         }
 
+        public List<Consulta> BuscarPorData(DateTime dataConsulta, Guid idMedico)
+        {
+            return ctx.Consultas
+                 .Include(x => x.Situacao)
+                 .Where(x => x.MedicoClinica!.MedicoId == idMedico && EF.Functions.DateDiffDay(x.DataConsulta, dataConsulta) == 0)
+                 .ToList();
+        }
+
         public List<Medico> ListarTodos()
         {
             return ctx.Medicos.

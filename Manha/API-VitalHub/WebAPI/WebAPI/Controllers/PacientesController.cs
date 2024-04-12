@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using WebAPI.Domains;
 using WebAPI.Interfaces;
@@ -46,27 +48,21 @@ namespace WebAPI.Controllers
             return Ok(pacienteRepository.BuscarPorId(id));
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] PacienteViewModel pacienteModel)
         {
             try
             {
-                //objeto a ser cadastrado
                 Usuario user = new Usuario();
 
-                //recebe os valores e preenche as propriedades do objeto
                 user.Nome = pacienteModel.Nome;
                 user.Email = pacienteModel.Email;
                 user.TipoUsuarioId = pacienteModel.IdTipoUsuario;
 
-                //define o nome do container do blob
-                var containerName = "containervitalhubtarde";
+                var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobvitalhubmanha;AccountKey=W9c2ktBs0XlzeWZ51AVLYSArkO10rGafFh0RhJrH8n/AY0lD+4zDcdzkILWcQDmihfe5aVAUn9aJ+AStZJhFPg==;EndpointSuffix=core.windows.net";
 
-                //define a string de conexão
-                var connectionString = "DefaultEndpointsProtocol=https;AccountName=blobvitalhubtarde;AccountKey=irESJMeYuN8FtPy2nNqV5HF9TpAnkkOf1bcnG7oY0OuP2wch0sXUDGH44jCkkPW+JgmDjHji/bvG+AStAkVsng==;EndpointSuffix=core.windows.net";
+                var containerName = "blobvitalcontainermanha";
 
-                //aqui vamos chamar o método para upload da imagem
                 user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(pacienteModel.Arquivo!, connectionString, containerName);
 
                 user.Senha = pacienteModel.Senha;

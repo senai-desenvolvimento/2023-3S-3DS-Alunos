@@ -112,6 +112,7 @@ builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddScoped<EmailSendingService>();
 
+
 // CORS
 builder.Services.AddCors(options =>
 {

@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Utils
+﻿namespace WebAPI.Utils.Criptografia
 {
     public static class Criptografia
     {

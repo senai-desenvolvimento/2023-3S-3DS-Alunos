@@ -1,7 +1,7 @@
 ﻿using WebAPI.Contexts;
 using WebAPI.Domains;
 using WebAPI.Interfaces;
-using WebAPI.Utils;
+using WebAPI.Utils.Criptografia;
 
 namespace WebAPI.Repositories
 {

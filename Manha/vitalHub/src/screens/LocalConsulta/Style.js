@@ -12,7 +12,10 @@ export const MapImage = styled.Image`
   height: 100%;
 `;
 
-export const ContentLocale = styled.View`
+export const ContentAdress = styled.View`
+  height: 46% ;
   width: 100%;
   align-items: center;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 `;

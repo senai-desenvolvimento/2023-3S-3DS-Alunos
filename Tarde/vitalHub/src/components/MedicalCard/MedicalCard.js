@@ -1,14 +1,29 @@
-import { MedicalCards, ProfileDataCard, ProfileName, SimpleText } from "./Style";
+import {
+  MedicalCards,
+  ProfileDataCard,
+  ProfileName,
+  SimpleText,
+} from "./Style";
 import { ProfileImageCard } from "../ProfileImage/Style";
+import { useEffect } from "react";
 
-const MedicalCard = ({selected = true}) => {
+const MedicalCard = ({ selected = true, medico, setMedico }) => {
   return (
-    <MedicalCards selected={selected}>
-      <ProfileImageCard source={require("../../../assets/usman.jpg")} />
+    <MedicalCards
+      selected={selected}
+      onPress={() =>
+        setMedico({ 
+          medicoClinicaId: medico.id, 
+          medicoLabel: medico.idNavigation.nome,
+          medicoEspecialidade : medico.especialidade.especialidade1
+        })
+      }
+    >
+      <ProfileImageCard source={{ uri: medico.idNavigation.foto }} />
 
       <ProfileDataCard>
-        <ProfileName>Dr Usman</ProfileName>
-        <SimpleText>Cardiologista</SimpleText>
+        <ProfileName>{medico.idNavigation.nome}</ProfileName>
+        <SimpleText>{medico.especialidade.especialidade1}</SimpleText>
       </ProfileDataCard>
     </MedicalCards>
   );

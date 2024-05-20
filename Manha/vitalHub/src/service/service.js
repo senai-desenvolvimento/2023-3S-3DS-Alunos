@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const portApi = '5074'
-const ip = '172.16.20.235'
-// const apiUrlLocal = `http://${ip}:${portApi}/api`
-const apiUrlLocal = `http://localhost:${portApi}/api`
+// const portApi = '5074'
+const portApi = '4466'
+const url = 'http://192.168.21.109'
+
+const apiUrlLocal = `${url}:${portApi}/api`
 
 // Aplicando a criacao da conexão
 const api = axios.create({

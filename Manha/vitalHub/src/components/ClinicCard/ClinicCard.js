@@ -1,33 +1,39 @@
-import { ClinicCards, LocationClinic, Rating,
-          NameClinic, TimeText, TimeView,
-          ViewColumn, ViewRow  } from './style'
+import {
+  ClinicCards,
+  LocationClinic,
+  Rating,
+  NameClinic,
+  TimeText,
+  TimeView,
+  ViewColumn,
+  ViewRow,
+} from "./style";
 
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCalendar } from '@fortawesome/free-regular-svg-icons'
-import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 
-const ClinicCard = ({ nomeClinica, localClinica, avaliacao, horarioAtendimento}) => {
+const ClinicCard = ({ selected, clinica, setClinica }) => {
   return (
-    <ClinicCards>
+    <ClinicCards
+      selected={selected}
+
+      onPress={() => setClinica({
+        clinicaId : clinica.id,
+        clinicaLabel : clinica.nomeFantasia
+      })}
+    >
       <ViewColumn>
-        <NameClinic>{nomeClinica}</NameClinic>
+        <NameClinic>{clinica.nomeFantasia}</NameClinic>
 
-        <LocationClinic>{localClinica}</LocationClinic>
-      </ViewColumn>
-
-      <ViewColumn alignItems='flex-end'>
         <ViewRow>
-          <FontAwesomeIcon icon={faStar} color='#F9A620' size={20}/>
+          <LocationClinic>{clinica.endereco.cidade}</LocationClinic>
 
-          <Rating>{avaliacao}</Rating>
+          <TimeView>
+            <FontAwesomeIcon icon={faCalendar} size={14} color="#49B3BA" />
+
+            <TimeText>Seg-Sex</TimeText>
+          </TimeView>
         </ViewRow>
-
-        <TimeView>
-          <FontAwesomeIcon icon={faCalendar} size={14} color='#49B3BA'/>
-
-          <TimeText>{horarioAtendimento}</TimeText>
-        </TimeView>
-
       </ViewColumn>
     </ClinicCards>
   );

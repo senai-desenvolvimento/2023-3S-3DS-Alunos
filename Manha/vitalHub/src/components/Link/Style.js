@@ -9,7 +9,7 @@ export const LinkBold = styled.Text`
     `;
 
 export const LinkMedium = styled(LinkBold)`
-    width: 320px;
+    width: 90%;
     color: #8C8A97;
     margin-top: 10px;
     text-decoration-color: #8C8A97;

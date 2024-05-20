@@ -20,7 +20,19 @@ export const ContainerHeader = styled(LinearGradient).attrs({
   box-shadow: 0px 4px 15px #00000014;
 `
 
-export const BoxUser = styled.View`
+export const HeaderContent = styled.SafeAreaView`
+  width: 100%;
+  margin-top: 50px;
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`
+
+// export const BoxUser = styled.View`
+export const BoxUser = styled.TouchableOpacity.attrs({
+  activeOpacity : 1
+})`
   gap: 10px;
   flex-direction: row;
   align-items: center;
@@ -49,12 +61,4 @@ export const TextDefault = styled.Text`
   font-size: 14px;
   font-weight: 500;
   color : #4e4b59
-`
-
-export const HeaderContent = styled.SafeAreaView`
-  width: 100% ;
-
-  flex-direction: row ;
-  align-items: center ;
-  justify-content:space-between ;
 `

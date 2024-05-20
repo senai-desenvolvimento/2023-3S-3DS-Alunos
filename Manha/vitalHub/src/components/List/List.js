@@ -7,3 +7,15 @@ export const ListComponent = styled(FlatList)`
 
   align-self: center;
 `
+
+export const ListComponentEmpty = styled.Text`
+  width: 80%;
+  color: #ACABB7;  
+  font-size: 16px;
+  margin-top: 15px;
+
+  align-self: center;
+  text-align: center;
+ 
+  font-family: "Quicksand_500Medium";
+`

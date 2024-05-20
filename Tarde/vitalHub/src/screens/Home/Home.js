@@ -1,119 +1,178 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FilterAppointment } from "./styles";
-import { ListComponent } from "../../components/List/List";
+import { ListComponent, ListComponentEmpty } from "../../components/List/List";
 
 import Header from "../../components/Header/Header";
+import AgendarConsulta from "../AgendarConsulta/AgendarConsulta"
 import AppointmentCard from "../../components/AppointmentCard/AppointmentCard";
 import CancellationModal from "../../components/CancellationModal/CancellationModal";
 import AppointmentModal from "../../components/AppointmentModal/AppointmentModal";
-import AgendarConsulta from "../AgendarConsulta/AgendarConsulta";
-import { Container, ContainerHome } from "../../components/Container/Style";
+import { ContainerHome } from "../../components/Container/Style";
 import CalendarList from "../../components/CalendarList/CalendarList";
 import AbsListAppointment from "../../components/AbsListAppointment/AbsListAppointment";
+import { ConteinerScheduleImage, ImageScheduleAppointment } from "../../components/ScheduleAppointment/Style";
 
-import {
-  ConteinerScheduleImage,
-  ImageScheduleAppointment,
-} from "../../components/ConteinerScheduleImage/Style";
-import { StatusBar } from "expo-status-bar";
+import { userDecodeToken } from "../../utils/Auth";
+import api from '../../service/service'
+import moment from "moment";
 
-//lista de consultas
-const Consultas = [
-  { id: 1, nome: "Lucas", situacao: "pendente" },
-  { id: 2, nome: "Lucas", situacao: "realizado" },
-  { id: 3, nome: "Lucas", situacao: "cancelado" },
-  { id: 4, nome: "Lucas", situacao: "realizado" },
-  { id: 5, nome: "Lucas", situacao: "cancelado" },
-];
+const Home = ({ navigation, route }) => {
+  const [profile, setProfile] = useState({});
+  const [consultas, setConsultas] = useState([]);
+  const [dataConsulta, setDataConsulta] = useState('');
+  const [statusLista, setStatusLista] = useState("Pendentes");
+  const [consultaSelecionada, setConsultaSelecionada] = useState(null)
 
-//tela home
-const Home = ({ navigation }) => {
-
-  //state para status da lista - inicia em "pendente"
-  const [statusLista, setStatusLista] = useState("pendente");
-
-  // criando a constante de exibição do modal
+  // criando as constantes de exibição do modal
+  const [showModalAgendamento, setShowModalAgendamento] = useState(false);
   const [showModalCancelar, setShowModalCancelar] = useState(false);
   const [showModalAppointment, setShowModalAppointment] = useState(false);
-  const [showModalAgendamento, setShowModalAgendamento] = useState(false);
 
-  // state perfil usuário
-  const [profile, setProfile] = useState("Paciente");
+  async function ListarConsultas(){
+    const url = (profile.role == 'Medico' ? "Medicos" : "Pacientes")
+
+    await api.get(`/${url}/BuscarPorData?data=${ moment(dataConsulta).format('YYYY-MM-DD') }&id=${profile.user}`)
+    .then( response => {
+      setConsultas(response.data);
+    }).catch( error => {
+      console.log(error);
+    })
+  }
+
+  async function profileLoad() {
+    const token = await userDecodeToken();
+
+    if (token !== null) {
+      setProfile(token);
+
+      setDataConsulta( moment().format('YYYY-MM-DD') )
+    }
+  }
+
+  useEffect(() => {
+    profileLoad();
+  }, []);
+
+  function MostrarModal(modal, consulta){
+    setConsultaSelecionada( consulta )
+
+    if(modal == 'cancelar'){
+      setShowModalCancelar(true)
+    }else if(modal == 'prontuario'){
+      setShowModalAppointment(true)
+    }else{
+      setShowModalAgendamento(true)
+    }
+  }
+
+  useEffect(() => {
+    if(dataConsulta != '' ){
+      ListarConsultas();
+    }
+  }, [dataConsulta]);
 
   return (
     <ContainerHome>
-      
-      {/* cria o header */}
-      <Header />
+      {/* component Header */}
+      <Header navigation={navigation} />
 
-      {/* cria o calendário */}
-      <CalendarList />
+      {/* component Calendar */}
+      <CalendarList
+        dataConsulta={ dataConsulta }
+        setDataConsulta={ setDataConsulta }
+      />
 
-      {/* cria seção do filtro das consultas */}
+      {/* component buttons - status */}
+      {/* container */}
       <FilterAppointment>
-        {/* cria botão para filtrar consultas - pendente */}
+        {/* button */}
         <AbsListAppointment
           textButton={"Agendadas"}
-          clickButton={statusLista === "pendente"}
-          onPress={(e) => setStatusLista("pendente")}
+          clickButton={statusLista === "Pendentes"}
+          onPress={() => setStatusLista("Pendentes")}
         />
-        {/* cria botão para filtrar consultas - realizado */}
+        {/* button */}
         <AbsListAppointment
           textButton={"Realizadas"}
-          clickButton={statusLista === "realizado"}
-          onPress={(e) => setStatusLista("realizado")}
+          clickButton={statusLista === "Realizados"}
+          onPress={() => setStatusLista("Realizados")}
         />
-        {/* cria botão para filtrar consultas - cancelado */}
+        {/* button */}
         <AbsListAppointment
           textButton={"Canceladas"}
-          clickButton={statusLista == "cancelado"}
-          onPress={(e) => setStatusLista("cancelado")}
+          clickButton={statusLista == "Cancelados"}
+          onPress={() => setStatusLista("Cancelados")}
         />
       </FilterAppointment>
 
-      {/* cria o mapeamento da lista de consultas (cards) */}
+      {/* component card list */}
       <ListComponent
-        data={Consultas}
+        data={consultas}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) =>
-          statusLista == item.situacao && (
-            // cria card de consulta da tela home
+        renderItem={ ({ item }) =>
+          statusLista == item.situacao.situacao && (
             <AppointmentCard
-              situacao={item.situacao}
+              situacao={item.situacao.situacao}
               navigation={navigation}
-              onConnectCancelar={() => setShowModalCancelar(true)}
-              onConnectAppointment={() => setShowModalAppointment(true)}
+
+              consulta={ item.id }
+              roleUsuario={ profile.role }
+              dataConsulta={ item.dataConsulta }
+              prioridade={ item.prioridade.prioridade }
+              usuarioConsulta={ profile.role == "Medico" ? item.paciente : item.medicoClinica.medico }
+
+              onConnectCancelar={() => MostrarModal('cancelar', item)}
+              onConnectAppointment={() => MostrarModal('prontuario', item)}
             />
           )
         }
         showsVerticalScrollIndicator={false}
+
+        ListEmptyComponent={() => (
+          <ListComponentEmpty>
+            Nenhuma consulta encontrada...
+          </ListComponentEmpty>
+        )}
       />
 
-      {profile === "Paciente" && (
-        <ConteinerScheduleImage onPress={() => setShowModalAgendamento(true)}>
+      {profile.role === "Paciente" && (
+        <ConteinerScheduleImage
+          onPress={() => {
+            // alert("agendar");
+            setShowModalAgendamento(true)
+          }}
+        >
           <ImageScheduleAppointment
             source={require("../../../assets/agendar.png")}
           />
         </ConteinerScheduleImage>
       )}
 
-      {/* Passando direto a propriedade para exibicao do modal - cancelar */}
+      {/* Passando direto a propriedade para exibicao do modal */}
       <CancellationModal
-        visible={showModalCancelar}
-        setShowModalCancelar={setShowModalCancelar}
-      />
-      {/* Passando direto a propriedade para exibicao do modal - prontuário */}
-      <AppointmentModal
-        situacao={statusLista}
-        visible={showModalAppointment}
-        setShowModalAppointment={setShowModalAppointment}
+        consulta={ consultaSelecionada }
+        setDataConsulta={ setDataConsulta }
+
+        visible={showModalCancelar} //será exibido se state estiver em true
+        setShowModalCancelar={setShowModalCancelar} //cancelar do modal - sair X
+        navigation={navigation} //fazer posteriormente junto com a navegação
       />
 
+      <AppointmentModal
+        consulta={consultaSelecionada}
+        setDataConsulta={setDataConsulta}
+
+        visible={showModalAppointment}
+        setShowModalAppointment={setShowModalAppointment}
+        navigation={navigation} //fazer posteriormente junto com a navegação
+      />
+
+      {/* Modal de agendamento de consulta */}
       <AgendarConsulta
-        navigation={navigation}
         visible={showModalAgendamento}
-        setShowModalAgendamento={setShowModalAgendamento}
+        setShowModalAgendamento={setShowModalAgendamento}  
+        navigation={navigation} //fazer posteriormente junto com a navegação
       />
     </ContainerHome>
   );

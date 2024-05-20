@@ -7,5 +7,23 @@ export const ContentInputSmall = styled.View`
   align-self: center;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px ;
 `;
+
+export const ButtonCamera = styled.TouchableOpacity.attrs({
+  activeOpacity : 0.8
+})`
+  padding: 12px;
+  border-radius: 10%;
+  background-color: #496BBA;
+  border: 1px solid #fbfbfb;
+
+  position: absolute;
+  right: 15px;
+  bottom: -20px;
+`
+
+export const ContainerLoad = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`

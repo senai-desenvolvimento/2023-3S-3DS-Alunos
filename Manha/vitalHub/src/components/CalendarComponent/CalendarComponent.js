@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
-import moment from 'moment-timezone';
 import { Calendar, LocaleConfig } from "react-native-calendars";
 
-const CalendarComponent = () => {
-  const [selected, setSelected] = useState("");
-
+const CalendarComponent = ({setDataSelecionada, dataSelecionada}) => {
   const currentDate = new Date();
-  const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1);
-
-  // Configura o fuso horário padrão para UTC-3
-  moment.tz.setDefault('America/Sao_Paulo');
+  const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
 
   LocaleConfig.locales["pt-br"] = {
     monthNames: [
@@ -35,20 +29,19 @@ const CalendarComponent = () => {
       style={{
         width : 360,
         alignSelf : 'center',
-        backgroundColor : '#FAFAFA',
+        backgroundColor : '#FAFAFA'
       }}
-    
-      onDayPress={(day) => {
-        setSelected(day.dateString);
-      }}
+
+      onDayPress={ (date) => setDataSelecionada(date.dateString)}
+
       markedDates={{
-        [selected]: {
+        [dataSelecionada]: {
           selected: true,
           disableTouchEvent: true
         },
       }}
 
-      minDate={ moment(startingDate).format('YYYY-MM-DD') }
+      minDate={startingDate.toString()}
 
       theme={{
         calendarBackground : '#FAFAFA',

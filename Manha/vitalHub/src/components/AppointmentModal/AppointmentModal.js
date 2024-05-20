@@ -1,65 +1,135 @@
-import {
-  AppointmentContent,
-  ModalContent,
-  TextModal,
-  ModalImage,
-  RowTextModal,
-} from "./style";
-import { Modal } from "react-native";
+import { useEffect, useState } from 'react';
+import { Modal } from 'react-native'
+import moment from 'moment'
+import api from '../../service/service';
+import { ActivityIndicator } from 'react-native';
+import { userDecodeToken } from '../../utils/Auth';
 
-import { Title } from "../Title/Style";
-import { ButtonModal, ButtonCancel } from "../Button/Style";
-import { ButtonTitle, ButtonSecondaryTitle } from "../ButtonTitle/Style";
+import { AppointmentContent, ModalContent, TextModal,
+          ModalImage, RowTextModal } from './style'
 
-const AppointmentModal = ({
-  situacao,
-  visible,
-  navigation,
-  setShowModalAppointment,
-  typeProfile = "paciente",
-  ...rest
-}) => {
+import { Title } from '../Title/Style';
+import { ButtonTitle, ButtonSecondaryTitle } from '../ButtonTitle/Style';
+import { ButtonModal, ButtonCancel } from '../Button/Style';
 
-  async function handleClose( screen ){
+
+const AppointmentModal = ({consulta, roleUsuario, setDataConsulta, navigation, visible, setShowModalAppointment, ...rest}) => {
+  const [load, setLoad] = useState(false)
+  const [profile, setProfile] = useState(null)
+
+  const [fotoUsuario, setFotoUsuario] = useState('')
+  const [nomeUsuario, setNomeUsuario] = useState('')
+  const [complementoUmUsuario, setComplementoUmUsuario] = useState('')
+  const [complementoDoisUsuario, setComplementoDoisUsuario] = useState('')
+
+  async function handleClose(stack){
+    setLoad(true)
+
     await setShowModalAppointment(false)
 
-    navigation.replace( screen )
+    if( stack == "Local consulta" ){
+      navigation.replace(stack, { clinica : consulta.medicoClinica.clinicaId })
+
+    }else{
+      // await api.put(`/Consultas/Status?consulta=${consulta.id}&status=D15FFCE2-6078-4F64-96F6-B80E7AC05012`)
+      await api.put(`/Consultas/Status?consulta=${consulta.id}&status=Realizados`)
+      .then( async () => {
+        await setDataConsulta( moment() )
+
+        navigation.replace(stack, { consultaId : consulta.id })
+      }).catch( error => {
+        console.log( error )
+      })
+    }
+    
+    setLoad(false)
   }
 
-  return (
-    <Modal {...rest} visible={visible} transparent={true} animationType="fade">
+  async function profileLoad(){
+    const token = await userDecodeToken()
+
+    if( token ){
+      if( token.role === "Paciente"){
+        setFotoUsuario( consulta.medicoClinica.medico.idNavigation.foto );
+        setNomeUsuario( consulta.medicoClinica.medico.idNavigation.nome );
+        setComplementoUmUsuario( consulta.medicoClinica.medico.especialidade.especialidade1 );
+        setComplementoDoisUsuario( `CRM-${consulta.medicoClinica.medico.crm}` );
+        
+      }else{
+        setFotoUsuario( consulta.paciente.idNavigation.foto );
+        setNomeUsuario( consulta.paciente.idNavigation.nome );
+        setComplementoUmUsuario( `${moment(moment() ).diff(consulta.paciente.dataNascimento, 'years')} anos` );
+        setComplementoDoisUsuario( consulta.paciente.idNavigation.email );
+      }
+
+      await setProfile( token )
+    }
+  }
+
+  useEffect(() => {    
+    if( visible ){
+      profileLoad()
+    }
+  }, [visible])
+
+  return ( 
+    <Modal {...rest} visible={visible} transparent={true} animationType='fade' animationOutTiming={0}>
       <AppointmentContent>
         <ModalContent>
-          <ModalImage
-            source={require("../../../assets/profileLargeDoctor.png")}
-          />
+          {
+            profile
+              ? (<>
+                  <ModalImage source={{ uri: fotoUsuario }} />
+                  {/* <ModalImage source={require("../../../assets/nicolle.png")} /> */}
 
-          <Title>Dr. Claudio</Title>
+                  <Title>{nomeUsuario}</Title>
 
-          <RowTextModal>
-            <TextModal>Clinico Geral</TextModal>
+                  <RowTextModal>
+                    <TextModal>{complementoUmUsuario}</TextModal>
 
-            <TextModal>CRM-15286</TextModal>
-          </RowTextModal>
+                    <TextModal>{complementoDoisUsuario}</TextModal>
+                  </RowTextModal>
 
-          {situacao !== "pendente" ? (
-            <ButtonModal onPress={ () => handleClose("Medico Prontuario") } >
-              <ButtonTitle>Inserir prontuário </ButtonTitle>
-            </ButtonModal>
-          ) : (
-            <ButtonModal onPress={ () => handleClose("Local consulta") }>
-              <ButtonTitle>Ver local da consulta </ButtonTitle>
-            </ButtonModal>
-          )}
+                  {
+                    profile.role === 'Medico'
+                    ? (
+                      <ButtonModal
+                        disabled={load}
+                        onPress={() => handleClose("Prontuario")}
+                        // onPress={() => handleClose("Medico Prontuario")}
+                      >
+                        {
+                          load
+                            ? <ActivityIndicator color={'#fbfbfb'} />
+                            : <ButtonTitle >Inserir Prontuário</ButtonTitle>
+                        }
+                      </ButtonModal>
+                    ) : (
+                      <ButtonModal
+                        disabled={load}
+                        onPress={() => handleClose("Local consulta")}
+                      >
+                        {
+                          load
+                            ? <ActivityIndicator color={'#fbfbfb'} />
+                            : <ButtonTitle >Ver local da consulta</ButtonTitle>
+                        }
+                      </ButtonModal>
+                    )
+                  }
 
-          <ButtonCancel onPress={() => setShowModalAppointment(false)}>
-            <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
-          </ButtonCancel>
-
-        </ModalContent>
+                  <ButtonCancel onPress={() => setShowModalAppointment(false)}>
+                    <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
+                  </ButtonCancel>
+                </>
+              ) : (
+                <ActivityIndicator />
+              )
+          }
+        </ModalContent>                                                     
       </AppointmentContent>
     </Modal>
   );
 };
 
-export default AppointmentModal;
+export default AppointmentModal

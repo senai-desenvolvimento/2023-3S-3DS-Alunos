@@ -1,4 +1,5 @@
-import { ContainerFlex, ContainerImage, ContainerScroll } from "../../components/Container/Style";
+import { useState, useEffect } from "react";
+import { ContentContainer, ContainerFlex, ContainerImage, ContainerScroll } from "../../components/Container/Style";
 import { ProfileImageLarge } from "../../components/ProfileImage/Style";
 import { Title, Subtitle } from "../../components/Title/Style";
 import { Label } from "../../components/Label/Style";
@@ -6,13 +7,17 @@ import { Input, InputLarge } from "../../components/Input/Style";
 import { ButtonCancel, ButtonSecondary, ButtonSendImage } from "../../components/Button/Style";
 import { ButtonCameraTitle, ButtonCancelTitle, ButtonSecondaryTitle } from "../../components/ButtonTitle/Style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Linha } from "./Style";
-import { Content } from "../MedicoProntuario/Style";
+import { Linha, BoxView, BoxText, BoxViewImage } from "./Style";
 
-const PacienteProntuario = ({ navigation }) => {
+import CameraModal from "../../components/CameraModal/CameraModal";
+
+const PacienteProntuario = () => {
+  const [uriCameraCapture, setUriCameraCapture] = useState(null)
+  const [showCameraModal, setShowCameraModal] = useState(false)
+
   return (
     <ContainerScroll>
-      <Content>
+      <ContentContainer>
         <ContainerImage>
           <ProfileImageLarge
             source={require("../../../assets/profileLargeDoctor.png")}
@@ -33,11 +38,20 @@ const PacienteProntuario = ({ navigation }) => {
         <InputLarge placeholder="Prescrição médica" />
 
         {/* implementar a captura de câmera - npm install react-native-camera ??? */}
+        {/* <InputLarge placeholder="Nenhuma foto informada" /> */}
         <Label>Exames médicos</Label>
-        <InputLarge placeholder="Nenhuma foto informada" />
+        { uriCameraCapture == null ? (
+          <BoxView>
+            <BoxText>Nenhuma foto informada</BoxText>
+          </BoxView>
+        ) : (
+          <BoxViewImage
+            source={{ uri : uriCameraCapture }}
+          />
+        ) }
 
         <ContainerFlex>
-          <ButtonSendImage>
+          <ButtonSendImage onPress={() => setShowCameraModal(true)}>
             <MaterialCommunityIcons
               name="camera-plus-outline"
               size={24}
@@ -46,7 +60,7 @@ const PacienteProntuario = ({ navigation }) => {
             <ButtonCameraTitle>Enviar</ButtonCameraTitle>
           </ButtonSendImage>
 
-          <ButtonCancel>
+          <ButtonCancel onPress={ () => setUriCameraCapture(null) }>
             <ButtonCancelTitle>Cancelar</ButtonCancelTitle>
           </ButtonCancel>
         </ContainerFlex>
@@ -55,10 +69,16 @@ const PacienteProntuario = ({ navigation }) => {
 
         <InputLarge placeholder="Descrição do exame" />
 
-        <ButtonSecondary onPress={ () => navigation.replace("Main")}>
+        <ButtonSecondary>
           <ButtonSecondaryTitle>Voltar</ButtonSecondaryTitle>
         </ButtonSecondary>
-      </Content>
+      </ContentContainer>
+
+      <CameraModal
+        visible={showCameraModal}
+        setUriCameraCapture={setUriCameraCapture}
+        setShowCameraModal={setShowCameraModal}
+      />
     </ContainerScroll>
   );
 };

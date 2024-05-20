@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
 
-export const Content = styled.View`
+export const ContentRecord = styled.View`
     align-items:center ;
 `;

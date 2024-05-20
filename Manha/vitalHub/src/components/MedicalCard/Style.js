@@ -1,7 +1,7 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { Title } from '../Title/Style'
 
-export const MedicalCards = styled.View`
+export const MedicalCards = styled.TouchableOpacity`
   width: 320px;
   height: 102px;
   
@@ -15,7 +15,13 @@ export const MedicalCards = styled.View`
   border-radius: 5px;
   background-color: #FFFFFF;
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
-  border-color: ${ (props) => props.selected ? '#496BBA' : 'black'};
+  
+  ${ (props) => props.selected
+    ?  css`
+      border: 2px solid #496BBA;
+    `
+    : null
+  };
 `;
 
 export const ViewColumn = styled.View`

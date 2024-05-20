@@ -1,16 +1,22 @@
-import { ContainerImage, ContainerScroll } from "../../components/Container/Style";
+import {
+  ContainerImage,
+  ContainerScroll,
+} from "../../components/Container/Style";
 import { ProfileImageLarge } from "../../components/ProfileImage/Style";
 import { Label } from "../../components/Label/Style";
 import { Input, InputLarge } from "../../components/Input/Style";
-import { ButtonSecondaryTitle, ButtonTitle } from "../../components/ButtonTitle/Style";
-import { Button, ButtonSecondary } from "../../components/Button/Style";
+import {
+  ButtonSecondaryTitle,
+  ButtonTitle,
+} from "../../components/ButtonTitle/Style";
+import { Button, ButtonEdit, ButtonSecondary } from "../../components/Button/Style";
 import { Title, Subtitle } from "../../components/Title/Style";
-import { Content } from "./Style";
+import { ContentRecord } from "./Style";
 
-const MedicoProntuario = () => {
+const MedicoProntuario = ({navigation}) => {
   return (
     <ContainerScroll>
-      <Content>
+      <ContentRecord>
         <ContainerImage>
           <ProfileImageLarge
             source={require("../../../assets/profileLargePatient.png")}
@@ -34,14 +40,16 @@ const MedicoProntuario = () => {
           <ButtonTitle>Salvar</ButtonTitle>
         </Button>
 
-        <Button>
+        <ButtonEdit>
           <ButtonTitle>Editar</ButtonTitle>
-        </Button>
+        </ButtonEdit>
 
-        <ButtonSecondary>
+        <ButtonSecondary onPress={() => {
+          navigation.replace("Main");
+        }}>
           <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
         </ButtonSecondary>
-      </Content>
+      </ContentRecord>
     </ContainerScroll>
   );
 };

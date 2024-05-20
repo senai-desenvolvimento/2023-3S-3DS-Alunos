@@ -1,12 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { StyledCalendarStrip } from './style'
+import moment from "moment";
 
-import moment from 'moment-timezone';
-
-const CalendarList = () => {
-  // Configura o fuso horário padrão para UTC-3
-  moment.tz.setDefault('America/Sao_Paulo');
-
+const CalendarList = ({ dataConsulta, setDataConsulta }) => {
   moment.updateLocale("pt-br", {
     months:
       "Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro".split(
@@ -20,7 +16,7 @@ const CalendarList = () => {
     weekdaysShort: "Dom_Seg_Ter_Qua_Qui_Sex_Sáb".split("_"),
     weekdaysMin : 'dom_2ª_3ª_4ª_5ª_6ª_sáb'.split('_'),
   });
-  
+
   const currentDate = new Date();
   const startingDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
   const endingDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
@@ -30,11 +26,13 @@ const CalendarList = () => {
       calendarAnimation={{ type: "sequence", duration: 30 }}
       daySelectionAnimation={ styles.selectedAnimationStyle }
 
+      selectedDate={ dataConsulta }
+      onDateSelected={ date => setDataConsulta( date ) }
+
       iconLeftStyle={styles.iconsStyle}
       iconRightStyle={styles.iconsStyle}
 
-      selectedDate={currentDate}
-      startingDate={moment()}
+      startingDate={ moment() }
 
       minDate={startingDate}
       maxDate={endingDate}

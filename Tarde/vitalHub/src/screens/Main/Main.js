@@ -1,64 +1,71 @@
+import { useEffect } from "react";
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-const BottomTab = createBottomTabNavigator();
+import { Text } from "react-native";
+import { ContentIcon, TextIcon } from "./Style";
 
-// Importando as telas
-import Home from '../Home/Home';
-import PerfilPaciente from '../PerfilPaciente/PerfilPaciente';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-// Chamando os elementos do Style
-import {ContentIcon, TextIcon} from './Style'
+import Home from "../Home/Home";
+import PerfilPaciente from "../PerfilPaciente/PerfilPaciente";
 
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'
+import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-export const Main = () => {
+// Instânciando a função de definição do bottom navigation
+const bottomTab = createBottomTabNavigator();
+
+export const Main = ({ navigation, route }) => {
+  const routeParams = route.params
+  // const paramsNavigationCreate = (route.params != undefined ? route.params.createUser : false)
+
   return (
-    <BottomTab.Navigator
-      initialRouteName="Home"
+    <bottomTab.Navigator
+      // Definindo a rota inicial
+      initialRouteName={"Home"}
 
+      // Definindo as opções dentro do bottom tabs
       screenOptions={ ({ route }) => ({
-        tabBarStyle : { backgroundColor: "#FFFFFF", height: 80, paddingTop: 10 },
-        tabBarActiveBackgroundColor : "transparent",
-        tabBarShowLabel : false,
-        headerShown : false,
+        tabBarStyle: { backgroundColor: "#FFFFFF", height: 80, paddingTop: 10 },
+        tabBarActiveBackgroundColor: "transparent",
+        tabBarShowLabel: false,
+        headerShown: false,
 
-        tabBarIcon : ({ focused }) => {
-          if( route.name === "Home" ){
+        // Aplicando o efeito do Icone clicado
+        tabBarIcon: ({ focused }) => {
+          if (route.name === "Home") {
             return (
               <ContentIcon
-                tabBarActiveBackgroundColor={ focused ? "#ECF2FF" : "transparent" }
+                tabBarActiveBackgroundColor={
+                  focused ? "#ECF2FF" : "transparent"
+                }
               >
-                <FontAwesome name="calendar" size={18} color="#4E4B59"/>
-                { focused && <TextIcon>Agenda</TextIcon> }
+                <FontAwesome name="calendar" size={18} color={focused ? "#607EC5" : "#4E4B59"} />
+                {focused && <TextIcon color={focused ? "#607EC5" : "#4E4B59"}>Agenda</TextIcon>}
               </ContentIcon>
-            )
-
+            );
+          
+          // }else if(route.name === "Perfil"){
           }else{
-            // FontAwesome5 -> user-circle
             return (
-              <ContentIcon
-                tabBarActiveBackgroundColor={ focused ? "#ECF2FF" : "transparent" }
-              >
-                <FontAwesome5 name="user-circle" size={18} color="#4E4B59"/>
-                { focused && <TextIcon>Perfil</TextIcon> }
+              <ContentIcon tabBarActiveBackgroundColor={
+                  focused ? "#ECF2FF" : "transparent"
+              }>
+                <FontAwesome5 name="user-circle" size={22} color={focused ? "#607EC5" : "#4E4B59"} />
+                {focused && <TextIcon color={focused ? "#607EC5" : "#4E4B59"}>Perfil</TextIcon>}
               </ContentIcon>
-            )
-
-          }
+            );
+          };
         }
       })}
     >
 
-      <BottomTab.Screen 
-        name="Home"
-        component={Home}
-      />
+      {/* Definindo as rotas de acesso das telas */}
+      <bottomTab.Screen name="Home" component={Home}/>
 
-      <BottomTab.Screen 
-        name="Perfil"
-        component={PerfilPaciente}
-      />
-
-    </BottomTab.Navigator>
-  )
-}
+      <bottomTab.Screen name="Perfil">
+       { (props) => <PerfilPaciente route={route} navigation={navigation}/> }
+      </bottomTab.Screen>
+  
+    </bottomTab.Navigator>
+  );
+};

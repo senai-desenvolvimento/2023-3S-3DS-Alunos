@@ -1,39 +1,46 @@
+import { useEffect, useState } from "react";
 import ClinicCards from "../../components/ClinicCard/ClinicCard";
 import { Container } from "../../components/Container/Style";
 import { TitleSelect } from "../../components/Title/Style";
 
-import { ListComponent } from '../../components/List/List'
+import { ListComponent, ListComponentEmpty } from "../../components/List/List";
 import { Button, ButtonSecondary } from "../../components/Button/Style";
-import { ButtonSecondaryTitle, ButtonTitle } from "../../components/ButtonTitle/Style";
+import {
+  ButtonSecondaryTitle,
+  ButtonTitle,
+} from "../../components/ButtonTitle/Style";
+import api from "../../service/service";
 
-const clinicas = [
-  {
-    id: 1,
-    nome: "Clinica Natureh",
-    avaliacao: 5,
-    localizacao: "São Paulo, SP",
-    inicioAtividade: "Seg",
-    fimAtividade: "Sex",
-  },
-  {
-    id: 2,
-    nome: "Diamond pró mulher",
-    avaliacao: 4.8,
-    localizacao: "São Paulo, SP",
-    inicioAtividade: "Seg",
-    fimAtividade: "Sex",
-  },
-  {
-    id: 3,
-    nome: "Clinica Villa Lobos",
-    avaliacao: 4.2,
-    localizacao: "Taboão, SP",
-    inicioAtividade: "Seg",
-    fimAtividade: "Sab",
-  },
-];
+const SelecionarClinica = ({ navigation, route }) => {
+  const [clinica, setClinica] = useState(null);
+  const [clinicas, setClinicas] = useState([]);
 
-const SelecionarClinica = () => {
+  async function ListarClinicas() {
+    await api
+      .get(
+        `/Clinica/BuscarPorCidade?cidade=${route.params.agendamento.localizacao}`
+      )
+      .then((response) => {
+        setClinicas(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function handleContinue(){
+    navigation.replace("Selecionar medico", {
+      agendamento : {
+        ...route.params.agendamento, // Passando todas as informacoes contidas no route.params.agendamento
+        ...clinica
+      }
+    });
+  }
+  
+  useEffect(() => {
+    ListarClinicas();
+  }, []);
+
   return (
     // <Container enabled behavior={ Platform.OS === 'ios'? 'padding': null}>
     <Container>
@@ -44,20 +51,27 @@ const SelecionarClinica = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <ClinicCards
-            nomeClinica={item.nome}
-            localClinica={item.localizacao}
-            avaliacao={item.avaliacao}
-            horarioAtendimento={`${item.inicioAtividade}-${item.fimAtividade}`}
+            selected={clinica && clinica.clinicaId == item.id}
+
+            clinica={item}
+            setClinica={setClinica}
           />
         )}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => (
+          <ListComponentEmpty>
+            Nenhuma clínica encontrada...
+          </ListComponentEmpty>
+        )}
       />
 
-      <Button>
+      <Button onPress={() => handleContinue()}>
         <ButtonTitle>Continuar</ButtonTitle>
       </Button>
 
-      <ButtonSecondary>
+      <ButtonSecondary
+        onPress={() => navigation.navigate("Main", { previousRoute: true })}
+      >
         <ButtonSecondaryTitle>Cancelar</ButtonSecondaryTitle>
       </ButtonSecondary>
     </Container>

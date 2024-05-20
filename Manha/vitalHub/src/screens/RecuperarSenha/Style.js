@@ -1,6 +1,8 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 
-export const ContentLogo = styled.View`
+export const ContentLogo = styled.TouchableHighlight.attrs({
+  activeOpacity : 1
+})`
   height: 50px;
   width: 50px;
 

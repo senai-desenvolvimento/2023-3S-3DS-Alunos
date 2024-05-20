@@ -8,30 +8,43 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain"
+      "resizeMode": "cover"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "config": {
-        "userInterfaceStyle": "light",
-        "statusBar": {
-          "style": "light",
-          "backgroundColor": "transparent",
-          "translucent" :true
-        }}
-
+      "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "android": {
+        "permissions": [
+          "READ_EXTERNAL_STORAGE"
+        ]
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/logo.png",
+      "backgroundColor": "#ffffff"
     }
-  }
+  },
+  "web": {
+    "favicon": "./assets/favicon.png"
+  },
+  "plugins": [
+    [
+      "expo-camera",
+      {
+        "cameraPermission": "Permitir o VitalHub acessar a câmera?",
+        "enableMicrophonePermission": false
+      }
+    ],
+    [
+      "expo-notifications",
+      {
+        "icon": "./local/assets/logo.png",
+        "color": "#FAFAFA"
+      }
+    ]
+  ]
 }

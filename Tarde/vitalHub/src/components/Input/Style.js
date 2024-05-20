@@ -7,15 +7,19 @@ export const Input = styled.TextInput.attrs({
   height: 55px;
   padding: 16px;
   margin-top: 15px;
-  
-  /* align-self: center;
-  /* flex-direction: row; */
-  /* justify-content: center; */
-  
-  color: #34898f;
   border-radius: 5px;
-  background-color: #FAFAFA;
-  border: 2px solid #49b3ba;
+  
+  ${ (props) => props.editable === false
+    ? css`
+      color : #5F5C6B;
+      background-color: #F5F3F3;
+      border: 2px solid #D9D9D9;
+    `
+    : css`
+      color: #34898f;
+      background-color: #FAFAFA;
+      border: 2px solid #49b3ba;
+  `}
 
   font-family: "MontserratAlternates_600SemiBold";
 `;

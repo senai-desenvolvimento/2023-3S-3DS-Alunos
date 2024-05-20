@@ -1,19 +1,22 @@
-import styled from 'styled-components/native'
+import styled from "styled-components";
 
 export const ContentIcon = styled.View.attrs({
-  focus : true
+    focus:true
 })`
-  border-radius : 18px;
-  padding: 9px 12px;
-  background-color: ${ props => `${props.tabBarActiveBackgroundColor}`};
+    flex-direction: row;
+    justify-content:center ;
+    align-items:center ;
+    gap: 5px;
+    border-radius: 19px;
 
-  gap : 5px;
-  flex-direction: row;
-  align-items: center;
-  justify-content : center;
+    /* background-color: #ECF2FF ; */
+    background-color: ${props => `${props.tabBarActiveBackgroundColor}`} ;
+    padding: 9px  12px;
 `
 
 export const TextIcon = styled.Text`
-  font-size: 14px;
-  font-family: 'Quicksand_500Medium';
+    color : ${ (props) => props.color };
+    font-size:14px ;
+    font-weight: 600;
+    font-family: 'Quicksand_600SemiBold' ;
 `

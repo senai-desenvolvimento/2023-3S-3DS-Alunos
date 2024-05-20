@@ -1,11 +1,15 @@
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 import { Title } from '../Title/Style'
 
-export const CardDasConsulta = styled.TouchableOpacity`
+// export const CardDasConsulta = styled.View`
+export const CardDasConsulta = styled.TouchableOpacity.attrs({
+  activeOpacity : 1
+})`
   width: 340px;
   margin: 0px auto;
   margin-bottom: 12px;
   padding: 10px 11px;
+  box-sizing : border-box;
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
@@ -46,7 +50,7 @@ export const NomePerfil = styled(Title)`
 
 export const TextoSimples = styled.Text`
   font-size: 14px;
-  color: ${ (props) => props.situacao == 'pendente' ? '#49B3BA' : '#8C8A97'};
+  color: ${ (props) => props.situacao == 'Pendentes' ? '#49B3BA' : '#8C8A97'};
 `
 
 export const TextoNegrito = styled(TextoSimples)`
@@ -59,7 +63,7 @@ export const ClockCard = styled.View`
   
   padding : 4px 23px;
   border-radius: 5px;
-  background-color: ${ (props) => props.situacao == 'pendente' ?  '#E8FCFD' : '#F1F0F5'};
+  background-color: ${ (props) => props.situacao == 'Pendentes' ?  '#E8FCFD' : '#F1F0F5'};
 `
 
 export const ViewRow = styled.View`
@@ -75,5 +79,5 @@ export const ButtonCard = styled.TouchableOpacity`
 `
 
 export const ButtonText = styled.Text`
-  color : ${ (props) => props.situacao == 'pendente' ? '#C81D25' : '#344F8F' }
+  color : ${ (props) => props.situacao == 'Pendentes' ? '#C81D25' : '#344F8F' }
 `

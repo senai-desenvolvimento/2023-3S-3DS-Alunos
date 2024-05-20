@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 // Titulo principal das páginas
 export const Title = styled.Text`
   align-self: center;
+  /* margin-top: 20px; */
 
   font-size: 20px; 
   color: #33303e;
@@ -26,3 +27,15 @@ export const Subtitle = styled.Text`
  
   font-family: "Quicksand_500Medium";
 `;
+
+export const TitleError = styled.Text`
+  width: 80%;
+  color: #D23940;  
+  font-size: 16px;
+  margin-top: 15px;
+
+  align-self: center;
+  text-align: center;
+ 
+  font-family: "Quicksand_600SemiBold";
+`

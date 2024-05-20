@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native'
 
-export const ClinicCards = styled.View`
+export const ClinicCards = styled.TouchableOpacity`
   width: 320px;
   height: 84px;
   padding: 18px;
@@ -12,19 +12,29 @@ export const ClinicCards = styled.View`
   align-self: center;
   flex-direction: row;
   justify-content: space-between;
-  /* align-content: space-between; */
- ${ (props) => props.selected ?  css`border: 2px solid #496BBA;` : ``};
+  
+  ${ (props) => props.selected
+    ?  css`
+      border: 2px solid #496BBA;
+    `
+    : null
+  };
 `
 
 export const ViewRow = styled.View`
+  width: 100%;
+
   gap: 2px;
-  align-items: center;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `
 
 export const ViewColumn = styled.View`
-  flex-direction: column;
+  width: 100%;
+
   gap: 10px;
+  flex-direction: column;
 `
 
 export const NameClinic = styled.Text`

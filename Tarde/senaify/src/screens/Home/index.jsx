@@ -89,7 +89,7 @@ const Home = ({ token, atual, audio, setAtual, setAudio }) => {
                         {/* Header da aplicação */}
                         <ContainerHeader>
                           <ImageProfile source={require("../../../assets/profile.jpg")}/>
-                          <Title>Good morning</Title>
+                          <Title accessibilityLabel="title-head">Good morning</Title>
                         </ContainerHeader>
               
                         <SubTitle>Explore nossas playlists</SubTitle>
@@ -100,6 +100,7 @@ const Home = ({ token, atual, audio, setAtual, setAudio }) => {
                           numColumns={2}
                           renderItem={ ({ item }) => (
                             <Album
+                              label="playlist-item"
                               image={item.images[0].url}
                               name={item.name}
                               description={item.description.substring(0, 35) + '...'}
@@ -138,6 +139,7 @@ const Home = ({ token, atual, audio, setAtual, setAudio }) => {
                           numColumns={1}
                           renderItem={ ({ item }) => (
                             <Music
+                              label="music-item"
                               play={atual == item.track.preview_url}
                               onPress={() => playSound(item.track.preview_url, atual, setAtual, audio, setAudio)}
                               // onPress={() => playSound(item.track.preview_url)}

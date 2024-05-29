@@ -14,7 +14,8 @@ export const ContainerHeader = styled.View`
   align-items: center;
 `
 
-export const ContainerBody = styled.View`
+// export const ContainerBody = styled.View`
+export const ContainerBody = styled.ScrollView`
   padding: 10px 30px;
 `
 
